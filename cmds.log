@@ -1,0 +1,15 @@
+    1  passwd
+    2  apt
+    3  sudo
+    4  quit
+    5  exit
+    6  git remote add origin https://github.com/KuroyukiRyuu/ws1.git
+    7  git init
+    8  git remote add origin https://github.com/KuroyukiRyuu/ws1.git
+    9  history > cmds.log
+   10  git push cmds.log
+   11  mkdir ws1
+   12  cd ws1
+   13  git init
+   14  history -> cmds.log
+   15  history > cmds.log
