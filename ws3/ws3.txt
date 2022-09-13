@@ -1,0 +1,29 @@
+1. The customer with the most reviews is ID 50122160 with 21922 reviews, followed by 50732546 at 9964 reviews and 52615377 at 2664 reviews.
+2. The product with the most reviews is Harry Potter and the Order of the Phoenix (Book 5), with 4625 reviews, followed by Harry Potter and the Goblet of Fire (Book 4) at 3739 reviews and Lies and the Lying Liars Who Tell Them at 2666 reviews.
+
+Script started on 2022-09-12 23:54:21-04:00
+]0;benjamin@sjsu:~/cs131[benjamin@sjsu cs131]$ cut -f2 amazon_reviews_us_Books_v1_02.tsv | sort | uniq -c | sort -nr -k1 | head
+  21922 50122160
+   9964 50732546
+   2664 52615377
+   2215 45041039
+   1797 50776149
+   1786 50913245
+   1643 20595117
+   1622 45273033
+   1416 39569598
+   1384 49693975
+]0;benjamin@sjsu:~/cs131[benjamin@sjsu cs131]$ cut -f4,6 amazon_reviews_us_Books_v1_02.tsv | sort | uniq -c | sort -nr -k1 | head
+   4625 043935806X	Harry Potter and the Order of the Phoenix (Book 5)
+   3739 0439139597	Harry Potter And The Goblet Of Fire (Book 4)
+   2666 0525947647	Lies and the Lying Liars Who Tell Them
+   2615 0895260174	Unfit For Command: Swift Boat Veterans Speak Out Against John Kerry
+   2584 0385504209	The Da Vinci Code
+   2366 0590353403	Harry Potter And The Sorcerer's Stone
+   2052 0439784549	Harry Potter and the Half-Blood Prince (Book 6)
+   2024 0316666343	The Lovely Bones
+   1795 1400050308	Treason: Liberal Treachery from the Cold War to the War on Terrorism
+   1772 0312864590	Crossroads of Twilight (The Wheel of Time, Book 10)
+]0;benjamin@sjsu:~/cs131[benjamin@sjsu cs131]$ exit
+
+Script done on 2022-09-12 23:56:35-04:00
