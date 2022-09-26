@@ -1,0 +1,193 @@
+Files were renamed for ease of use:
+downloaded_tweets_extend_nolf2.tsv -> extend.tsv
+downloaded_tweets_extend_original_nolf2.tsv -> original.tsv
+extend.tsv converted to ASCII -> extendascii.tsv
+
+0. Excel knows to display the tweet text as a single line because the csv file opens and closes the field with quotation markers. In Excel, you can use the SUBSTITUTION formula with CHAR(10) and a space to remove newlines.
+
+1 - 8: Output of commands below, each command corresponds to questions 1 through 8 (4 omitted)
+
+Explanation of commands:
+1. Cut the author ID and references field, grep for "replied_to", remove references column, then sort, uniq, and sort again to get the top 10. Contians users who replied to themselves, since it still counts as a reply.
+
+2. Similar logic to 1, but cutting the referenced user ID instead of the author ID.
+
+3. Similar logic to 1, but changing the grep field to "retweeted".
+
+4. Question removed
+
+5. Converted to ASCII due to hashtag issues, cut the hashtag field, use tr to convert commas to newlines and remove quotation marks, then sort, uniq, and sort again to sort by times seen, with head to display top 31 (empty space was #1)
+
+6. Similar logic to 5, except cut the references field as well, then grep for "retweeted", and remove references column before sorting
+
+7. Same logic as 6 except grep for "replied_to"
+
+8. Same logic as 6 except for "quoted"
+
+
+
+Script started on 2022-09-26 18:54:02-04:00
+]0;benjamin@sjsu:~/cs131/A2[benjamin@sjsu A2]$ cut -f2,5 original.tsv | grep -P "type=replied_to" | cut -f1 | sort | uniq -c | sort -nr -k1 | head
+    106 380648579
+    104 18831926
+     83 16050065
+     45 1240682348120866816
+     35 1094971056358637568
+     34 140496030
+     34 1387010761994682371
+     32 172323296
+     27 117810351
+     19 1573800344
+]0;benjamin@sjsu:~/cs131/A2[benjamin@sjsu A2]$ cut -f6,5 original.tsv | grep -P "type=replied_to" | cut -f2 | sort | uniq -c | sort -nr -k1 | head
+    112 18831926
+    107 380648579
+     83 16050065
+     45 3453306553
+     37 1094971056358637568
+     34 140496030
+     32 172323296
+     30 29447428
+     30 1240682348120866816
+     29 117810351
+]0;benjamin@sjsu:~/cs131/A2[benjamin@sjsu A2]$ cut -f2,5 extend.tsv | grep -P "type=retweeted" | cut -f1 | sort | uniq -c | sort -nr -k1 | head
+   2065 45379403
+   1678 77726331
+   1641 870244616003403781
+   1582 1028022611324747776
+   1312 711608180535640064
+   1281 139109800
+   1234 177400353
+   1216 832019161454817280
+   1159 29447428
+   1139 1060440219097423872
+]0;benjamin@sjsu:~/cs131/A2[benjamin@sjsu A2]$ cut -f4 extendascii.tsv | tr ',' '\n' | tr -d '"' | sort -r | uniq -c | sort -nr -k1 | head -n 31
+  20647 
+   2918 Ukraine
+   1609 COVID19
+   1115 Russia
+   1110 LongCovid
+    895 FBPE
+    894 FollowBackFriday
+    866 StandWithUkraine
+    536 PutinHitler
+    476 Russian
+    406 Putin
+    405 Omicron
+    366 BREAKING
+    363 auspol
+    357 Mariupol
+    343 bcpoli
+    337 Kyiv
+    319 ableg
+    305 StopPutinNOW
+    300 ????????????
+    292 COVIDisAirborne
+    282 PMQs
+    274 PutinWarCriminal
+    269 Ottawa
+    263 RussiaSanctions
+    263 Genocide
+    260 BoycottRussia
+    258 Ukrainian
+    252 VoteFordOut
+    239 onpoli
+    239 cdnpoli
+]0;benjamin@sjsu:~/cs131/A2[benjamin@sjsu A2]$ cut -f4,5 extendascii.tsv | grep -P "type=retweeted" | cut -f1 | tr ',' '\n' | tr -d '"' | sort | uniiq -c | sort -nr -k1 | head -n 31
+  20640 
+   2593 Ukraine
+   1096 COVID19
+   1029 Russia
+    956 LongCovid
+    397 Russian
+    362 BREAKING
+    348 auspol
+    317 Kyiv
+    316 Omicron
+    307 StandWithUkraine
+    292 ????????????
+    287 Mariupol
+    228 Putin
+    222 BA2
+    218 Ukrainian
+    199 fluke_natouch
+    178 PMQs
+    169 COVID
+    146 Covid19
+    138 ableg
+    134 ???????
+    128 Kharkiv
+    116 Anonymous
+    114 UkraineRussiaWar
+    114 NATO
+    113 UK
+    111 China
+    105 Partygate
+    104 longcovid
+    104 OhmThitiwat
+]0;benjamin@sjsu:~/cs131/A2[benjamin@sjsu A2]$ cut -f4,5 extendascii.tsv | grep -P "type=replied_to" | cut -f1 | tr ',' '\n' | tr -d '"' | sort | unniq -c | sort -nr -k1 | head -n 31
+    883 FBPE
+    875 FollowBackFriday
+    429 PutinHitler
+    324 StandWithUkraine
+    263 COVID19
+    216 StopPutinNOW
+    211 RussiaSanctions
+    207 BoycottRussia
+    191 PutinWarCriminal
+    181 bcpoli
+    149 Ottawa
+    130 bced
+    122 COVID19BC
+    115 Genocide
+    108 NeverVoteConservative
+    106 BoycottATP
+    100 onpoli
+     98 LongCovid
+     94 Ukraine
+     92 VoteFordOut
+     92 COVIDisAirborne
+     84 ClimateCrisis
+     77 Putin
+     72 Canada
+     65 cdnpoli
+     65 Apartheid
+     64 UkraineInvasion
+     62 N95
+     60 Ontario
+     58 MaskUp
+     50 J6TraitorSaysWhat
+]0;benjamin@sjsu:~/cs131/A2[benjamin@sjsu A2]$ cut -f4,5 extendascii.tsv | grep -P "type=quoted" | cut -f1 | tr ',' '\n' | tr -d '"' | sort | uniq --c | sort -nr -k1 | head -n 31
+    186 COVID19
+    157 StandWithUkraine
+    140 VoteFordOut
+    113 Genocide
+    111 ableg
+    104 onpoli
+    100 NeverVoteConservative
+     93 bcpoli
+     82 Ukraine
+     76 MaskMandate
+     76 COVIDisAirborne
+     72 Ontario
+     64 Putin
+     64 COVID19AB
+     64 BDS
+     61 MaskUp
+     60 PutinHitler
+     59 cdnpoli
+     59 COVID19BC
+     57 Ottawa
+     56 Canada
+     54 bced
+     53 CovidIsNotOver
+     49 covid19
+     49 LongCovid
+     47 PutinWarCriminal
+     46 VoteThemAllOut2022
+     46 FreePalestine
+     44 StopPutinNOW
+     43 covid19ab
+     43 abed
+]0;benjamin@sjsu:~/cs131/A2[benjamin@sjsu A2]$ exit
+
+Script done on 2022-09-26 18:55:42-04:00
