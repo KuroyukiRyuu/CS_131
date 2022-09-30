@@ -8,7 +8,7 @@ extend.tsv converted to ASCII -> extendascii.tsv
 1 - 8: Output of commands below, each command corresponds to questions 1 through 8 (4 omitted)
 
 Explanation of commands:
-1. Cut the author ID and references field, grep for "replied_to", remove references column, then sort, uniq, and sort again to get the top 10. Contians users who replied to themselves, since it still counts as a reply.
+1. Cut the author ID and references field, grep for "replied_to", remove references column, then sort, uniq, and sort again to get the top 10. Contains users who replied to themselves, since it still counts as a reply. (Updated: reran the commands with awk '($2 != $6)' and output was same, so bots did not influence the top 10.)
 
 2. Similar logic to 1, but cutting the referenced user ID instead of the author ID.
 
