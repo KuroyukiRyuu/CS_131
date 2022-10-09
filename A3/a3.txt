@@ -1,0 +1,140 @@
+Benjamin Wu
+
+Commands used:
+Q1:
+awk '{ gsub(/ /,""); print }' original.tsv | awk '$2 != $6' | grep "replied" | awk '{print $6,$2}' | sort -nr -k1 > A3Q1.txt
+
+Removes whitespace and then removes users who replied to themselves, then sorts by replied user ID field
+
+Q2:
+cut -d ' ' -f1 A3Q1.txt | uniq -c | sort -nr -k1 | awk '$1 > 2' | awk '{print $2}' > 3Replies.txt
+sed -i 's/^/^/' 3Replies.txt
+grep -Ef 3Replies.txt A3Q1.txt > A3Q2.txt
+
+Cuts first field of Q1, then sorts by occurence count, filters by >3 replies, then removes occurence count. Then, appends a ^ at the beginning to form a regex, then use grep -Ef to search with the file.
+
+Q3:
+cut -d ' ' -f1 A3Q1.txt | uniq -c | sort -nr -k1 | awk '$1 > 2' | awk '{print $1}' > histogramData.txt
+gnuplot> set terminal svg
+Terminal type is now 'svg'
+Options are 'size 600,480 fixed enhanced font 'Arial,12' butt dashlength 1.0 '
+gnuplot> set output "A3Q3.svg"
+gnuplot> binwidth = 5
+gnuplot> bin(x,width)=width*floor(x/width)
+gnuplot> plot 'histogramData.txt' using (bin($1,binwidth)):(1.0) smooth freq with boxes
+gnuplot> exit
+
+Similar to Q2, but removes user ID instead of occurence count in order to plot histogram. gnuplot commands shown.
+
+Q4:
+awk '{ gsub(/ /,""); print }' original.tsv | awk '$2 != $6' | grep "replied" | awk '{print $6,$4}' | grep -Ef testReplies.txt | awk '{print $2}' | tr ',' '\n' | tr -d '"' | sort | uniq -c | sort -nr -k1 | awk '{print $2}' | head -n 30 | sort > A3Common.txt
+
+awk '{ gsub(/ /,""); print }' extend.tsv | cut -f4,5 | awk '$2 != $6' | cut -f1 | tr ',' '\n' | tr -d '"' | sort | uniq -c | sort -nr -k1 | awk '{print $2}' | head -n 30 | sort > A2Common.txt
+
+diff -ic A2Common.txt A3Common.txt
+
+Same initial process as Q1, except also grabbing hashtag field and sorting. Same process for the list from A2, then using diff to find differences.
+
+Most of the similar hashtags related to COVID or Ukraine, the ones with > 3 replies had more Brexit/Britain related hashtags while the overall one had many more related to Russia.
+
+
+Script started on 2022-10-09 15:27:05-04:00
+]0;benjamin@sjsu:~/cs131[benjamin@sjsu cs131]$ awk '{ gsub(/ /,""); print }' original.tsv | awk '$2 != $6' | grep "replied" | awk '{print $6,$2}' | sort  -nr -k1 > A3Q1.txt
+]0;benjamin@sjsu:~/cs131[benjamin@sjsu cs131]$ cut -d ' ' -f1 A3Q1.txt | uniq -c | sort -nr -k1 | awk '$1 > 2' | awk '{print $2}' > 3Replies.txt
+]0;benjamin@sjsu:~/cs131[benjamin@sjsu cs131]$ sed -i 's/^/^/' 3Replies.txt
+]0;benjamin@sjsu:~/cs131[benjamin@sjsu cs131]$ grep -Ef 3Replies.txt A3Q1.txt > A3Q2.txt
+]0;benjamin@sjsu:~/cs131[benjamin@sjsu cs131]$ cut -d ' ' -f1 A3Q1.txt | uniq -c | sort -nr -k1 | awk '$1 > 2' | awk '{print $1}' > histogramData.txt
+]0;benjamin@sjsu:~/cs131[benjamin@sjsu cs131]$ ~/gnuplot/src/gnuplot
+
+	G N U P L O T
+	Version 5.4 patchlevel 5    last modified 2022-09-28 
+
+	Copyright (C) 1986-1993, 1998, 2004, 2007-2022
+	Thomas Williams, Colin Kelley and many others
+
+	gnuplot home:     http://www.gnuplot.info
+	faq, bugs, etc:   type "help FAQ"
+	immediate help:   type "help"  (plot window: hit 'h')
+
+Terminal type is now 'unknown'
+gnuplot> set terminal svg
+
+Terminal type is now 'svg'
+Options are 'size 600,480 fixed enhanced font 'Arial,12' butt dashlength 1.0 '
+gnuplot> binwidth = 5
+gnuplot> bin(x,width)=width*floor(x/width)
+gnuplot> sets outp             output "A3Q3.svg"
+gnuplot> plot 'histogramData.txt' using (bin($1,binwidth)):(1.0) smooth freq with boxes
+gnuplot> exit
+]0;benjamin@sjsu:~/cs131[benjamin@sjsu cs131]$ awk '{ gsub(/ /,""); print }' original.tsv | awk '$2 != $6' | grep "replied" | awk '{print $6,$4}' | grep  -Ef testReplies.txt | awk '{print $2}' | tr ',' '\n' | tr -d '"' | sort | uniq -c | sort -nr -k1 | awk '{print $2}' | head -n 300 | sort > A3Common.txt[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[CReplies.txt | awk '{print $2}' | tr ',' '\n' | tr -d '"' | sort | uniq -c | sort -nr -k1 | awk '{print $2}' | head -n 30 [1P[A[C[C[C[C[C[C[CReplies.txt | awk '{print $2}' | tr ',' '\n' | tr -d '"' | sort | uniq -c | sort -nr -k1 | awk '{print $2}' | head -n 30 |[1P[A[C[C[C[C[C[CReplies.txt | awk '{print $2}' | tr ',' '\n' | tr -d '"' | sort | uniq -c | sort -nr -k1 | awk '{print $2}' | head -n 30 | [1P[A[C[C[C[C[CReplies.txt | awk '{print $2}' | tr ',' '\n' | tr -d '"' | sort | uniq -c | sort -nr -k1 | awk '{print $2}' | head -n 30 | s[1P[A[C[C[C[C3Replies.txt | awk '{print $2}' | tr ',' '\n' | tr -d '"' | sort | uniq -c | sort -nr -k1 | awk '{print $2}' | head -n 30 | [1@s[A[C[C[C[C
+
+]0;benjamin@sjsu:~/cs131[benjamin@sjsu cs131]$ awk '{ gsub(/ /,""); print }' extend.tsv | cut -f4,5 | awk '$2 != $6' | cut -f1 | tr ',' '\n' | tr -d '"'  | sort | uniq -c | sort -nr -k1 | awk '{print $2}' | head -n 30 | sort > A2Common.txt
+]0;benjamin@sjsu:~/cs131[benjamin@sjsu cs131]$ diff -ic A2Common.txt A3Common.txt
+*** A2Common.txt	2022-10-09 15:28:55.099776864 -0400
+--- A3Common.txt	2022-10-09 15:28:45.349738513 -0400
+***************
+*** 1,30 ****
+! BA2
+! BREAKING
+! BoycottRussia
+  COVID19
+! COVIDisAirborne
+! FBPE
+! FollowBackFriday
+! Genocide
+! Kyiv
+  LongCovid
+! Mariupol
+! Omicron
+! Ottawa
+! Putin
+! PutinHitler
+! PutinWarCriminal
+  Russia
+! RussiaSanctions
+! Russian
+  StandWithUkraine
+- StopPutinNOW
+  Ukraine
+! Ukrainian
+! VoteFordOut
+  ableg
+  auspol
+! bcpoli
+! cdnpoli
+! onpoli
+  เจ้าแก้มก้อน
+--- 1,30 ----
+! AlboForPM
+! Auspol
+! Australia
+! BCCRSS
+! Brexit
+  COVID19
+! Covid
+! CovidIsNotOver
+! GutlessScomo
+! JohnsonOutDay25
+! JohnsonOut_23
+! LNP
+! LNPCorruptionParty
+! LNPDisgrace
+! LauterbachBleibt
+! LeMMMMMMRip
+  LongCovid
+! Morrison
+  Russia
+! ScottytheFailure
+  StandWithUkraine
+  Ukraine
+! VoteBlueToSaveAmerica
+! VoteFordOut2022
+! VoteJoshOut
+! WirWollenMaskenpflicht
+  ableg
+  auspol
+! ausvotes
+  เจ้าแก้มก้อน
+]0;benjamin@sjsu:~/cs131[benjamin@sjsu cs131]$ exit
+
+Script done on 2022-10-09 15:29:01-04:00
