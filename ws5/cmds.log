@@ -1,0 +1,2 @@
+  999  for item in $(cut -f2 amazon_reviews_us_Books_v1_02.tsv | sort | uniq -c | sort -nr -k1 | awk '{print $2}' | head -n100); do (grep $item amazon_reviews_us_Books_v1_02.tsv > $item.txt); done
+ 1000  history > cmds.log

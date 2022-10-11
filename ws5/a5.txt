@@ -1,0 +1,14 @@
+Benjamin Wu
+
+Explanation of command:
+for item in $(cut -f2 amazon_reviews_us_Books_v1_02.tsv | sort | uniq -c | sort -nr -k1 | awk '{print $2}' | head -n100); do (grep $item amazon_reviews_us_Books_v1_02.tsv > $item.txt); done
+
+For loop contains the command that gets the top 100 reviewers - did 100 instead of 1000 due to space issues on the VM, otherwise head -n1000 does 1000 reviewers.
+
+Do part of command greps for each reviewer ID and then appends that to a new file.
+
+kbenjamin@sjsu:~/cs131/ws5\[benjamin@sjsu ws5]$ for item in $(cut -f2 amazon_reviews_us_Books_v1_02.tsv | sort | uniq -c | sort -nr -k1 | awk '{prinnt $2}' | head -n100); do (grep $item amazon_reviews_us_Books_v1_02.tsv > $item.txt); done
+kbenjamin@sjsu:~/cs131/ws5\[benjamin@sjsu ws5]$ history > cmds.log
+kbenjamin@sjsu:~/cs131/ws5\[benjamin@sjsu ws5]$ exit
+
+Script done on 2022-10-11 15:23:03-04:00
