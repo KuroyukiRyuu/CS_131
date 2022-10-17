@@ -1,0 +1,78 @@
+ 1013  wget    https://s3.amazonaws.com/amazon-reviews-pds/tsv/amazon_reviews_us_Books_v1_02.tsv.gz
+ 1014  ls
+ 1015  gunzip amazon_reviews_us_Books_v1_02.tsv.gz 
+ 1016  ls
+ 1017  grep 043935806X amazon_reviews_us_Books_v1_02.tsv | awk -F "\t" '{print $8,$9}' > ~/PRODUCTS/043935806X.txt
+ 1018  grep 043935806X amazon_reviews_us_Books_v1_02.tsv | awk -F "\t" '{print $8,$9}' > PRODUCTS/043935806X.txt
+ 1019  cd PRODUCTS
+ 1020  head 043935806X.txt 
+ 1021  date
+ 1022  cd ..
+ 1023  grep 043935806X amazon_reviews_us_Books_v1_02.tsv | awk -F "\t" '{print}' > PRODUCTS/043935806X.txt
+ 1024  cd PRODUCTS/
+ 1025  head 043935806X.txt 
+ 1026  DATETIME = 'date'
+ 1027  DATETIME='date'
+ 1028  DATETIME
+ 1029  echo $DATETIME
+ 1030  DATETIME=date
+ 1031  echo DATETIME
+ 1032  echo $DATETIME
+ 1033  DATETIME=`date`
+ 1034  echo $DATETIME
+ 1035  cp 043935806X.txt 043935806X$DATETIME.txt 
+ 1036  date+"%Y"
+ 1037  date +"%Y"
+ 1038  date +"%D%H%"
+ 1039  date +"%D%H:%I%M%S"
+ 1040  date +"%D%H/%I:%M:%S"
+ 1041  date +"%Y%m%d_%I%M%S"
+ 1042  date +"%Y%m%d_%H%M%S"
+ 1043  DATETIME=`date +"%Y%m%d_%H%M%S"`
+ 1044  cp 043935806X.txt 043935806X$DATETIME.txt 
+ 1045  ls
+ 1046  cp 043935806X.txt 043935806X.$DATETIME.txt 
+ 1047  ls
+ 1048  rm 043935806X20221017_181348.txt 
+ 1049  ls
+ 1050  cd ..
+ 1051  head amazon_reviews_us_Books_v1_02.tsv 
+ 1052  echo -e 'US\t01\t01\t043935806X\t01\trandomreview\tuhh\t0\t0\t0\tN\tN\treview contents\t2022-10-17'
+ 1053  ls
+ 1054  cd PRODUCTS
+ 1055  ls
+ 1056  echo -e 'US\t01\t01\t043935806X\t01\trandomreview\tuhh\t0\t0\t0\tN\tN\treview contents\t2022-10-17' >> 043935806X.20221017_181348.txt 
+ 1057  tail 043935806X.20221017_181348.txt 
+ 1058  ln -s 043935806X.20221017_181348.txt 043935806X.LATEST.txt
+ 1059  ls
+ 1060  crontab
+ 1061  crontab test
+ 1062  crontab -e
+ 1063  awk "{print $8}" 043935806X.LATEST.txt | head
+ 1064  awk "{print $7}" 043935806X.LATEST.txt | head
+ 1065  cut -f8 043935806X.LATEST.txt | head
+ 1066  count=0; total=0; for i in $( awk '{ print $2; }' file.txt );do total=$(echo $total+$i | bc ); ((count++)); done; echo "scale=2; $total / $count" | bc
+ 1067  count=0; total=0; for i in $( awk '{ print $2; }' file.txt );do total=$(echo $total+$i | bc ); count=0; total=0; for i in $( awk '{ print $2; }' file.txt );do total=$(echo $total+$i | bc ); ((count++)); done; echo "scale=2; $total / $count" | bc; 
+ 1068  count=0; total=0; for i in $( awk '{ print $8; }' 043935806X.LATEST.txt ); do total=$(echo $total+$i | bc ); ((count++)); done; echo "scale=2; $total / $count" | bc
+ 1069  awk '{ print $8; }' 043935806X.LATEST.txt
+ 1070  count=0; total=0; for i in $( cut -f8 043935806X.LATEST.txt ); do total=$(echo $total+$i | bc ); ((count++)); done; echo "scale=2; $total / $count" | bc
+ 1071  crontab -e
+ 1072  crontab -l
+ 1073  crontab -e
+ 1074  crontab -l
+ 1075  crontab -e
+ 1076  count=0; total=0; for i in $(cut -f8 043935806X.LATEST.txt); do total=$(echo $total+$i | bc ); ((count++)); done; echo "scale=2; $total / $count" | bc > 043935806X.AVGRATING.txt
+ 1077  head 043935806X.AVGRATING.txt 
+ 1078  crontab -r
+ 1079  crontab -l
+ 1080  ls
+ 1081  cd ..
+ 1082  ls
+ 1083  rm -rf PRODUCTS/
+ 1084  script ws6.txt
+ 1085  cd ..
+ 1086  ls
+ 1087  cd cs131/
+ 1088  ls
+ 1089  vi ws6.txt 
+ 1090  history > cmds.log
