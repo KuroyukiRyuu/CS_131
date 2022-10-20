@@ -1,0 +1,116 @@
+Script started on 2022-10-19 21:08:21-04:00
+]0;benjamin@sjsu:~/cs131[benjamin@sjsu cs131]$ cut -f5 extend.tsv | grep "type=retweeted" | egrep -o "[0-9]+" > retweetIDs.txt
+]0;benjamin@sjsu:~/cs131[benjamin@sjsu cs131]$ cut -f5 extend.tsv | grep "type=retweeted" | egrep -o "[0-9]+" > retweetIDs.txt[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[Kcut -f1,2 original.tsv | egrep -f retweetIDs.txt | cut -f2 | sort | uniq -c | sort -nr -k1 | head
+    526 18831926
+    387 1891490382
+    275 163018653
+    274 1495480590572961792
+    254 1231514832479948802
+    250 1219232377605644289
+    189 42836999
+    179 1229752606714728454
+    178 380648579
+    158 813314931147816960
+]0;benjamin@sjsu:~/cs131[benjamin@sjsu cs131]$ cut -f1,2 original.tsv | egrep -f retweetIDs.txt | cut -f2 | sort | uniq -c | sort -nr -k1 | head[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[Kgrep "retweeted" extend.tsv | cut -f2,5 | awk -F '\t' 'match($2, /[0-9]+/) {print substr($2,RSTART,RLENGTH) "\t" $1}' | sort -n -k1 > retweetCCombined.txt
+]0;benjamin@sjsu:~/cs131[benjamin@sjsu cs131]$ cut -f1,2 original.tsv | egrep -f retweetIDs.txt | sort -n -k1 > retweetedIDs.txt
+]0;benjamin@sjsu:~/cs131[benjamin@sjsu cs131]$ join retweetedIDs.txt retweetedCombined.txt > combinedIDs.txt
+join: retweetedCombined.txt: No such file or directory
+]0;benjamin@sjsu:~/cs131[benjamin@sjsu cs131]$ join retweetedIDs.txt retweetedCombined.txt > combinedIDs.txt[C[C[1P[1P
+]0;benjamin@sjsu:~/cs131[benjamin@sjsu cs131]$ awk '{print $2 "\t" $3}' combinedIDs.txt > A4Q1.txt
+]0;benjamin@sjsu:~/cs131[benjamin@sjsu cs131]$ cut -f1 A4Q1.txt | uniq -c | sort -nr -k1 | awk '$1 > 2' | awk '{print $2}' > 3Retweets.txt
+]0;benjamin@sjsu:~/cs131[benjamin@sjsu cs131]$ sed -i 's/^/^/' 3Retweets.txt
+]0;benjamin@sjsu:~/cs131[benjamin@sjsu cs131]$ grep -Ef 3Retweets.txt A4Q1.txt > A4Q2.txt
+]0;benjamin@sjsu:~/cs131[benjamin@sjsu cs131]$ cut -f1 A4Q1.txt | uniq -c | sort -nr -k1 | awk '$1 > 2' | awk '{print $1}' > histogramData.txt
+]0;benjamin@sjsu:~/cs131[benjamin@sjsu cs131]$ ~[Kf[K~/gnuplot/src/gnuplot
+
+	G N U P L O T
+	Version 5.4 patchlevel 5    last modified 2022-09-28 
+
+	Copyright (C) 1986-1993, 1998, 2004, 2007-2022
+	Thomas Williams, Colin Kelley and many others
+
+	gnuplot home:     http://www.gnuplot.info
+	faq, bugs, etc:   type "help FAQ"
+	immediate help:   type "help"  (plot window: hit 'h')
+
+Terminal type is now 'unknown'
+gnuplot> set terminal svg
+
+Terminal type is now 'svg'
+Options are 'size 600,480 fixed enhanced font 'Arial,12' butt dashlength 1.0 '
+gnuplot> set output "A4Q3.svg"
+gnuplot> binwidth = 5
+gnuplot> bin(x,width)=width*floor(x/width)
+gnuplot> plot 'histogramData.txt' using (bin($1,binwidth)):(1.0) smooth freq with boxes
+gnuplot> exit
+]0;benjamin@sjsu:~/cs131[benjamin@sjsu cs131]$ cut -f1,4 original.tsv | grep -f retweetIDs.txt | cut -f2 | tr ',' '\n' | tr -d '"' | sort | uniq -c | sort -nr -k1 | awk '{print $2}' | head  -n 30 | sort > A4Common.txt
+]0;benjamin@sjsu:~/cs131[benjamin@sjsu cs131]$ cut -f4,5 extend.tsv | awk '$2 != $6' | cut -f1 | tr ',' '\n' | tr -d '"' | sort | uniq -c | sort -nr -k1 | awk '{print $2}' | head -n 30 | soort > A2Common.txt
+]0;benjamin@sjsu:~/cs131[benjamin@sjsu cs131]$ diff -ic A2Common.txt A4Common.txt
+*** A2Common.txt	2022-10-19 21:14:55.736039545 -0400
+--- A4Common.txt	2022-10-19 21:11:55.005329338 -0400
+***************
+*** 1,30 ****
+- 
+- BA2
+  BREAKING
+! BoycottRussia
+  COVID19
+  COVIDisAirborne
+! FBPE
+! FollowBackFriday
+! Genocide
+  Kyiv
+  LongCovid
+  Mariupol
+  Omicron
+! Ottawa
+  Putin
+- PutinHitler
+- PutinWarCriminal
+  Russia
+- RussiaSanctions
+  Russian
+  StandWithUkraine
+- StopPutinNOW
+  Ukraine
+  Ukrainian
+- VoteFordOut
+  ableg
+  auspol
+! bcpoli
+  onpoli
+  เจ้าแก้มก้อน
+--- 1,30 ----
+  BREAKING
+! COVID
+  COVID19
+  COVIDisAirborne
+! CovidIsNotOver
+! DemVoice1
+  Kyiv
+  LongCovid
+  Mariupol
++ OhmThitiwat
+  Omicron
+! OneOfUsAllOfUs
+! PMQs
+  Putin
+  Russia
+  Russian
+  StandWithUkraine
+  Ukraine
++ UkraineRussiaWar
++ UkraineWar
+  Ukrainian
+  ableg
+  auspol
+! ausvotes
+! cdnpoli
+! dogs
+! fluke_natouch
+  onpoli
+  เจ้าแก้มก้อน
++ โอห์มไง
+]0;benjamin@sjsu:~/cs131[benjamin@sjsu cs131]$ exit
+
+Script done on 2022-10-19 21:15:03-04:00
