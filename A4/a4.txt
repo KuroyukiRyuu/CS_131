@@ -1,3 +1,44 @@
+Explanation of commands:
+
+Q0: 
+cut -f5 extend.tsv | grep "type=retweeted" | egrep -o "[0-9]+" > retweetIDs.txt
+cut -f1,2 original.tsv | egrep -f retweetIDs.txt | cut -f2 | sort | uniq -c | sort -nr -k1 | head
+
+Uses a regex to parse for the tweet ID, then creates a file. Then, using grep we search by tweet ID and then sort by user ID / occurences.
+
+Q1:
+cut -f1,2 original.tsv | egrep -f retweetIDs.txt | sort -n -k1 > retweetedIDs.txt
+grep "retweeted" extend.tsv | cut -f2,5 | awk -F '\t' 'match($2, /[0-9]+/) {print substr($2,RSTART,RLENGTH) "\t" $1}' | sort -n -k1 > retweetCombined.txt
+join retweetedIDs.txt retweetedCombined.txt > combinedIDs.txt
+awk '{print $2 "\t" $3}' combinedIDs.txt > A4Q1.txt
+
+Creates a file with both the original tweet ID as well as the author's ID. Then, grep for "retweeted" in the other file and get both user ID doing retweets as well as retweeted ID, then join the two files based on the tweet ID.
+Code modified from: https://stackoverflow.com/questions/5466411/how-to-print-regexp-matches-using-awk
+
+Q2:
+cut -f1 A4Q1.txt | uniq -c | sort -nr -k1 | awk '$1 > 2' | awk '{print $2}' > 3Retweets.txt
+sed -i 's/^/^/' 3Retweets.txt
+grep -Ef 3Retweets.txt A4Q1.txt > A4Q2.txt
+
+Same commands as A3 submission, sort and get users that occur >3 times, and create a regex from the file and grep for the user IDs.
+
+Q3:
+cut -f1 A4Q1.txt | uniq -c | sort -nr -k1 | awk '$1 > 2' | awk '{print $1}' > histogramData.txt
+
+Same gnuplot commands as A3 submission.
+
+Q4:
+cut -f1,4 original.tsv | grep -f retweetIDs.txt | cut -f2 | tr ',' '\n' | tr -d '"' | sort | uniq -c | sort -nr -k1 | awk '{print $2}' | head -n 30 | sort > A4Common.txt
+cut -f4,5 extend.tsv | awk '$2 != $6' | cut -f1 | tr ',' '\n' | tr -d '"' | sort | uniq -c | sort -nr -k1 | awk '{print $2}' | head -n 30 | sort > A2Common.txt
+diff -ic A2Common.txt A4Common.txt
+
+Same commands as A3 submission, filter for only hashtag field and use diff to find differences.
+In this case, both of the hashtags are very similar, with a few differences such as FBPE and FollowBackFriday from the overall hashtags that the retweets do not have.
+
+Q5:
+Used Gephi, and only used users with > 3 replies/retweets. For replies, the majority of the graph only has a the minimum (3) connections, but there are a few outliers with multiple replies.
+For retweets, the svg file is too dense to view, but I observe similar patterns as the reply graph. 
+
 Script started on 2022-10-19 21:08:21-04:00
 ]0;benjamin@sjsu:~/cs131[benjamin@sjsu cs131]$ cut -f5 extend.tsv | grep "type=retweeted" | egrep -o "[0-9]+" > retweetIDs.txt
 ]0;benjamin@sjsu:~/cs131[benjamin@sjsu cs131]$ cut -f5 extend.tsv | grep "type=retweeted" | egrep -o "[0-9]+" > retweetIDs.txt[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[Kcut -f1,2 original.tsv | egrep -f retweetIDs.txt | cut -f2 | sort | uniq -c | sort -nr -k1 | head
@@ -11,7 +52,7 @@ Script started on 2022-10-19 21:08:21-04:00
     179 1229752606714728454
     178 380648579
     158 813314931147816960
-]0;benjamin@sjsu:~/cs131[benjamin@sjsu cs131]$ cut -f1,2 original.tsv | egrep -f retweetIDs.txt | cut -f2 | sort | uniq -c | sort -nr -k1 | head[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[Kgrep "retweeted" extend.tsv | cut -f2,5 | awk -F '\t' 'match($2, /[0-9]+/) {print substr($2,RSTART,RLENGTH) "\t" $1}' | sort -n -k1 > retweetCCombined.txt
+]0;benjamin@sjsu:~/cs131[benjamin@sjsu cs131]$ cut -f1,2 original.tsv | egrep -f retweetIDs.txt | cut -f2 | sort | uniq -c | sort -nr -k1 | head[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[Kgrep "retweeted" extend.tsv | cut -f2,5 | awk -F '\t' 'match($2, /[0-9]+/) {print substr($2,RSTART,RLENGTH) "\t" $1}' | sort -n -k1 > retweetCombined.txt
 ]0;benjamin@sjsu:~/cs131[benjamin@sjsu cs131]$ cut -f1,2 original.tsv | egrep -f retweetIDs.txt | sort -n -k1 > retweetedIDs.txt
 ]0;benjamin@sjsu:~/cs131[benjamin@sjsu cs131]$ join retweetedIDs.txt retweetedCombined.txt > combinedIDs.txt
 join: retweetedCombined.txt: No such file or directory
@@ -43,8 +84,10 @@ gnuplot> binwidth = 5
 gnuplot> bin(x,width)=width*floor(x/width)
 gnuplot> plot 'histogramData.txt' using (bin($1,binwidth)):(1.0) smooth freq with boxes
 gnuplot> exit
-]0;benjamin@sjsu:~/cs131[benjamin@sjsu cs131]$ cut -f1,4 original.tsv | grep -f retweetIDs.txt | cut -f2 | tr ',' '\n' | tr -d '"' | sort | uniq -c | sort -nr -k1 | awk '{print $2}' | head  -n 30 | sort > A4Common.txt
-]0;benjamin@sjsu:~/cs131[benjamin@sjsu cs131]$ cut -f4,5 extend.tsv | awk '$2 != $6' | cut -f1 | tr ',' '\n' | tr -d '"' | sort | uniq -c | sort -nr -k1 | awk '{print $2}' | head -n 30 | soort > A2Common.txt
+]0;benjamin@sjsu:~/cs131[benjamin@sjsu cs131]$ cut -f1,4 original.tsv | grep -f retweetIDs.txt | cut -f2 | tr ',' '\n' | tr -d '"' | sort | uniq -c | sort -nr -k1 | awk '{print $2}' | head 
+ -n 30 | sort > A4Common.txt
+]0;benjamin@sjsu:~/cs131[benjamin@sjsu cs131]$ cut -f4,5 extend.tsv | awk '$2 != $6' | cut -f1 | tr ',' '\n' | tr -d '"' | sort | uniq -c | sort -nr -k1 | awk '{print $2}' | head -n 30 | so
+ort > A2Common.txt
 ]0;benjamin@sjsu:~/cs131[benjamin@sjsu cs131]$ diff -ic A2Common.txt A4Common.txt
 *** A2Common.txt	2022-10-19 21:14:55.736039545 -0400
 --- A4Common.txt	2022-10-19 21:11:55.005329338 -0400
