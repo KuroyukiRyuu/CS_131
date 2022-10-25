@@ -1,3 +1,14 @@
+Benjamin Wu
+
+Explanation of command:
+grep 043935806X amazon_reviews_us_Books_v1_02.tsv | cut -f14 | awk '{gsub("and", ""); gsub("or", ""); gsub("if", ""); gsub("in", ""); gsub("it", ""); gsub(/\./, ""); gsub(/\;/, ""); gsub(/\,/, ""); print}' | sed -e 's/<[^>]*>//g' > modifiedReviews.txt
+
+grep for all entries with the product ID, then cut the review body field. Use gsub for all the words as well as the punctuation marks, then use sed to find all html tags, then send output to a file.
+
+sed command found from: https://stackoverflow.com/questions/38586255/sed-html-tags
+
+
+
 Script started on 2022-10-25 00:54:42-04:00
 ]0;benjamin@sjsu:~/cs131[benjamin@sjsu cs131]$ grep 043935806X amazon_reviews_us_Books_v1_02.tsv | cut -f14 | awk '{gsub("and", ""); gsub("or", """); gsub("if", ""); gsub("in", ""); gsub("it", ""); gsub(/\./, ""); gsub(/\;/, ""); gsub(/\,/, ""); print}' | sed -e 's//<[^>]*>//g' > modifiedReviews.txt
 ]0;benjamin@sjsu:~/cs131[benjamin@sjsu cs131]$ exit
