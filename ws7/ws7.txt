@@ -1,0 +1,5 @@
+Script started on 2022-10-25 00:54:42-04:00
+]0;benjamin@sjsu:~/cs131[benjamin@sjsu cs131]$ grep 043935806X amazon_reviews_us_Books_v1_02.tsv | cut -f14 | awk '{gsub("and", ""); gsub("or", """); gsub("if", ""); gsub("in", ""); gsub("it", ""); gsub(/\./, ""); gsub(/\;/, ""); gsub(/\,/, ""); print}' | sed -e 's//<[^>]*>//g' > modifiedReviews.txt
+]0;benjamin@sjsu:~/cs131[benjamin@sjsu cs131]$ exit
+
+Script done on 2022-10-25 00:54:56-04:00

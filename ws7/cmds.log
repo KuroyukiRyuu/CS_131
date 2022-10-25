@@ -1,0 +1,1000 @@
+   61  cut -f2,6 original.tsv | sort | uniq -c | head
+   62  cut -f2,6 original.tsv | sort | uniq -c | sort -nr k1 | head
+   63  cut -f2,6 original.tsv | sort | uniq -c | sort -nr -k1 | head
+   64  cut -f2 original.tsv | sort | uniq -c | sort -nr -k1 | head
+   65  cut -f2 original.tsv | sort | uniq -c | grep 18831926 | head
+   66  cut -f2, 6 original.tsv | grep 18831926 | head
+   67  cut -f2,6 original.tsv | grep 18831926 | head
+   68  head original.tsv 
+   69  cut -f2,6 original.tsv | grep -P "[0-9]+ [0-9]+" | head
+   70  cut -f2,6 original.tsv | grep -Po "[0-9]+ [0-9]+"
+   71  cut -f2,6 original.tsv | grep -Po "[0-9]+"
+   72  cut -f2,6 original.tsv | head
+   73  cut -f2,6 original.tsv | sort -nr -k2 | head
+   74  cut -f2,6 original.tsv | sort -nr -k2 | grep -Po "[0-9]+/n[0-9]+" | head
+   75  cut -f2,6 original.tsv | sort -nr -k2 | grep -Po "[0-9]+\t[0-9]+" | head
+   76  cut -f2,6 original.tsv | sort -nr -k2 | grep -Po "[0-9]+\t[0-9]+"
+   77  cut -f2,6 original.tsv | sort -nr -k2 | grep -Po "[0-9]+\t[0-9]+" | sort -nr -k1 | head
+   78  cut -f2,6 original.tsv | sort -nr -k2 | grep -Po "[0-9]+\t[0-9]+" | sort -nr -k1 | uniq -c | sort -nr -k1 | head
+   79  head original.tsv 
+   80  cut -f2,6 original.tsv | sort -nr -k2 | grep -Po "[0-9]+\t[0-9]+" | sort -nr -k2 | uniq -c | sort -nr -k1 | head
+   81  cut -f2,6 original.tsv | sort -nr -k2 | grep -P "[0-9]+\t[0-9]+" | sort -nr -k2 | uniq -c | sort -nr -k1 | head
+   82  cut -f6 original.tsv | sort | uniq -c | sort -nr -k1 | head
+   83  head extend.tsv 
+   84  cut -f1,2,6 extend.tsv | head
+   85  cut -f1,2,6,5 extend.tsv | head
+   86  cut -f1,2,6,8 extend.tsv | head
+   87  cut -f1,2,6 extend.tsv | head
+   88  cut -f2,5 extend.tsv | head
+   89  cut -f2,5 extend.tsv | grep -P "type=retweeted" | head
+   90  cut -f2,5 extend.tsv | grep -P "type=retweeted" | sort -nr -k1 | uniq -c | sort -nr -k1 | head
+   91  cut -f2,5 extend.tsv | grep -P "type=retweeted" | cut -f1 | sort | uniq -c | sort -nr -k1 | head
+   92  cut -f6 original.tsv | sort | uniq -c | sort -nr -k1 | head
+   93  head original
+   94  head original.tsv 
+   95  cut -f5 original.tsv | head
+   96  cut -f5 original.tsv | sort | head
+   97  cut -f5 original.tsv | sort | tail
+   98  cut -f5 original.tsv | sort | grep -P "type=r" | head
+   99  head original.tsv 
+  100  head extend.tsv 
+  101  cut -f5 original.tsv | sort | grep -P "type=replied" | head
+  102  cut -f5 original.tsv | sort | grep -P "type=replied" | tail
+  103  head original.tsv 
+  104  cut -f6,5 original.tsv | grep -P "type=replied_to" | cut -f1 | sort | uniq -c | sort -nr -k1 | head
+  105  cut -f6,5 original.tsv | grep -P "type=replied_to" | head
+  106  cut -f5,6 original.tsv | grep -P "type=replied_to" | head
+  107  cut -f6,5 original.tsv | grep -P "type=replied_to" | cut -f2 | sort | uniq -c | sort -nr -k1 | head
+  108  cut -f2,5 original.tsv | grep -P "type=replied_to" | cut -f1 | sort | uniq -c | sort -nr -k1 | head
+  109  head extend.tsv 
+  110  cut -f4 extend.tsv | sort | head
+  111  cut -f4 extend.tsv | sort -r | head
+  112  cut -f4 extend.tsv | sort -r | uniq -c | sort -nr -k1 | head
+  113  file extend.tsv 
+  114  iconv -f utf-8 -t ascii//TRANSLIT extend.tsv -o extendascii.tsv
+  115  file extendascii.tsv 
+  116  cut -f4 extendascii.tsv | sort -r | uniq -c | sort -nr -k1 | head
+  117  cut -f4 extendascii.tsv | sort -r | uniq -c | sort -nr -k1 | head -n 31
+  118  od -a extend
+  119  od -a extend.tsv
+  120  cut -f4 extend.tsv | sort -r | uniq -c | sort -nr -k1 | head
+  121  cut -f4 extendascii.tsv | sort -r | uniq -c | sort -nr -k1 | head -n 31
+  122  cut -f4 extendascii.tsv | tr ',' '\n' | tr '"' '' | sort -r | uniq -c | sort -nr -k1 | head -n 31
+  123  cut -f4 extendascii.tsv | tr ',' '\n' | sort -r | uniq -c | sort -nr -k1 | head -n 31
+  124  cut -f4 extendascii.tsv | tr ',' '\n' | tr -c '"' | sort -r | uniq -c | sort -nr -k1 | head -n 31
+  125  cut -f4 extendascii.tsv | tr ',' '\n' | tr -d '"' | sort -r | uniq -c | sort -nr -k1 | head -n 31
+  126  cut -f4 extend.tsv | tr ',' '\n' | tr -d '"' | sort -r | uniq -c | sort -nr -k1 | head -n 31
+  127  cut -f4,5 extendascii.tsv | head
+  128  cut -f4,5 extendascii.tsv | grep -P "type=retweeted" | head
+  129  cut -f4,5 extendascii.tsv | grep -P "type=retweeted" | cut -f1 | head
+  130  cut -f4,5 extendascii.tsv | grep -P "type=retweeted" | cut -f1 | tr ',' '\n' | tr -d '"' | sort | head
+  131  cut -f4,5 extendascii.tsv | grep -P "type=retweeted" | cut -f1 | tr ',' '\n' | tr -d '"' | sort |
+  132  cut -f4,5 extendascii.tsv | grep -P "type=retweeted" | cut -f1 | tr ',' '\n' | tr -d '"' | sort | uniq -c | sort -nr -k1 | head -n 31
+  133  cut -f4,5 extendascii.tsv | grep -P "type=replied" | head
+  134  cut -f4,5 extendascii.tsv | grep -P "type=quo" | head
+  135  cut -f4,5 extendascii.tsv | grep -P "type=replied_to" | cut -f1 | tr ',' '\n' | tr -d '"' | sort | uniq -c | sort -nr -k1 | head -n 31
+  136  cut -f4,5 extendascii.tsv | grep -P "type=quoted" | cut -f1 | tr ',' '\n' | tr -d '"' | sort | uniq -c | sort -nr -k1 | head -n 31
+  137  ls
+  138  script a2.txt
+  139  vim a2.txt
+  140  ls
+  141  git add a2.txt 
+  142  git commit -m "Finished A2"
+  143  git push -u origin master
+  144  ls
+  145  cd cs131
+  146  ls
+  147  cd A2
+  148  ls
+  149  awk '($2 == $6) {print $0}' extendascii.tsv | head
+  150  awk '($2 == $6) {print $0}' extendascii.tsv | wc
+  151  head extendascii.tsv
+  152  awk '($2 == $6) {print $0}' original.tsv | wc
+  153  awk '($2 == $6) {print $0}' original.tsv | head
+  154  awk '($2 == $6)' original.tsv | head
+  155  awk '($2 != $6)' original.tsv | head
+  156  awk '($2 != $6)' original.tsv | cut -f2,5 | grep -P "type=replied_to" | cut -f1 | sort | uniq -c | sort -nr -k1 | head
+  157  awk '($2 == $6)' original.tsv | cut -f2,5 | grep -P "type=replied_to" | cut -f1 | sort | uniq -c | sort -nr -k1 | head
+  158  awk '($2 != $6)' original.tsv | cut -f6,5 | grep -P "type=replied_to" | cut -f2 | sort | uniq -c | sort -nr -k1 | head
+  159  awk '($2 != $6)' original.tsv | wc
+  160  original.tsv | wc
+  161  wc original.tsv
+  162  vi a2.txt
+  163  git add a2.txt
+  164  git status
+  165  git commit -m "Updated A2"
+  166  git push -u origin master
+  167  cd gnuplot-5.4.5/src/
+  168  apt
+  169  wget https://sourceforge.net/projects/gnuplot/files/gnuplot/5.4.5/gnuplot-5.4.5.tar.gz/download
+  170  ls
+  171  cd download
+  172  ls
+  173  ls -l
+  174  rm download gnuplot.tar.gz 
+  175  mv download gnuplot.tar.gz
+  176  chmod download 777
+  177  chmod 777 download
+  178  wget https://sourceforge.net/projects/gnuplot/files/gnuplot/5.4.5/gnuplot-5.4.5.tar.gz/download gnuplot.tar.gz
+  179  wget --output-document=gnuplot.tar.gz https://sourceforge.net/projects/gnuplot/files/gnuplot/5.4.5/gnuplot-5.4.5.tar.gz/download
+  180  ls
+  181  gunzip
+  182  gunzip gnuplot.tar.gz 
+  183  ls
+  184  tar gnuplot.tar
+  185  tar -xf gnuplot.tar
+  186  ls
+  187  cd gnuplot-5.4.5/
+  188  ls
+  189  cd configure
+  190  ls
+  191  ls ..
+  192  cd gnuplot-5.4.5 ; ./configure ; make
+  193  make check
+  194  cd src ; ./gnuplot
+  195  ls
+  196  display 
+  197  display filename.svg
+  198  pwd
+  199  display filename.svg
+  200  ls
+  201  mv gnuplot-5.4.5 gnuplot
+  202  ls
+  203  cd cs131
+  204  ls
+  205  cd ws4
+  206  ls
+  207  cd ..
+  208  cd ws3
+  209  ls
+  210  cd ..
+  211  cd A2
+  212  ls
+  213  mv extendascii.tsv /..
+  214  mv extendascii.tsv ..
+  215  ls
+  216  mv extend.tsv ..
+  217  mv original.tsv ..
+  218  cd ..
+  219  ls
+  220  head extendascii.tsv 
+  221  ls
+  222  exit
+  223  ls
+  224  cd gnuplot
+  225  ls
+  226  cd 
+  227  cd download
+  228  ls
+  229  cd gnuplot
+  230  cd demo
+  231  ls
+  232  cd ..
+  233  ls
+  234  cd src
+  235  ls
+  236  display filename.svg
+  237  exit
+  238  ls
+  239  cd gnuplot/src
+  240  ls
+  241  display filename.svg
+  242  xhost +
+  243  exit
+  244  cd gnuplot/src
+  245  display filename.svg 
+  246  exit
+  247  cd gnuplot/src
+  248  display fi
+  249  exit
+  250  cd gnuplot/src
+  251  display filename.svg
+  252  exit
+  253  ls
+  254  ls ~
+  255  ls ~/gnuplot/src
+  256  ls
+  257  cd cs1331
+  258  cd cs131
+  259  ls
+  260  ls /
+  261  ls ./
+  262  ls ~/
+  263  ~/gnuplot/src/gnuplot 
+  264  ls
+  265  cd cs131
+  266  ls
+  267  head original.tsv 
+  268  cut -f5 original.tsv | head
+  269  cut -f5 original.tsv | grep "replied" | head
+  270  cut -f2,5,6 original.tsv | grep "replied" | head
+  271  cut -f2,5,6 original.tsv | grep "replied" | tail
+  272  awk ($2 != $6) original.tsv 
+  273  awk '($2 != $6)' original.tsv 
+  274  awk '($2 == $6)' original.tsv 
+  275  head original.tsv 
+  276  awk '($2 == $6)' original.tsv 
+  277  awk '$2 == $6' original.tsv 
+  278  cut -f2,5,6 original.tsv | grep "replied" | head
+  279   awk '{ gsub(/ /,""); print }' original.tsv | head
+  280   awk '{ gsub(/ /,""); print }' original.tsv | awk '$2 == $6"
+  281   awk '{ gsub(/ /,""); print }' original.tsv | awk '$2 == $6'
+  282   awk '{ gsub(/ /,""); print }' original.tsv | awk '$2 == $6' | cut f2,6 | head
+  283  cut f2,6  awk '{ gsub(/ /,""); print }' original.tsv | awk '$2 == $6' | cut f2,6 | head
+  284  cut f2,6 | awk '{ gsub(/ /,""); print }' original.tsv | awk '$2 == $6' | head
+  285  cut f2,6 original.tsv | awk '{ gsub(/ /,""); print }' | awk '$1 == $2' | head
+  286  cut f2,6  awk '{ gsub(/ /,""); print }' original.tsv | awk '$2 == $6' | cut -f2,6 | head
+  287  awk '{ gsub(/ /,""); print }' original.tsv | awk '$2 == $6' | cut -f2,6 | head
+  288  cp /home/test/A1/downloaded_tweets_extend_original_nolf2.tsv new.tsv
+  289  ls
+  290  awk '$2 == $6' new.tsv | head
+  291  ls -latr
+  292  rm original.tsv
+  293  mv new.tsv original.tsv
+  294  rm extendascii.tsv
+  295  rm extend.tsv
+  296  cp /home/test/A1/downloaded_tweets_extend_nolf2.tsv extend.tsv
+  297  awk '{ gsub(/ /,""); print }' original.tsv | awk '$2 != $6' | cut -f2,6 | head
+  298  awk '{ gsub(/ /,""); print }' original.tsv | awk '$2 != $6' | grep "replied" | cut -f2,6 | head
+  299  awk '{ gsub(/ /,""); print }' original.tsv | awk '$2 != $6' | grep "replied" | cut -f2,6 | sort -nr -k2 | head
+  300  exit
+  301  awk '{ gsub(/ /,""); print }' original.tsv | awk '$2 != $6' | grep "replied" | awk '{print $6,$2}' | sort -nr -k1 > A3Q1.txt
+  302  cut -d ' ' -f1 A3Q1.txt | uniq -c | sort -nr -k1 | awk '$1 > 2' | awk '{print $2}' > 3Replies.txt
+  303  sed -i 's/^/^/' 3Replies.txt
+  304  grep -Ef testReplies.txt A3Q1.txt > A3Q2.txt
+  305  grep -Ef 3Replies.txt A3Q1.txt > A3Q2.txt
+  306  ~/gnuplot/src/gnuplot
+  307  awk '{ gsub(/ /,""); print }' original.tsv | awk '$2 != $6' | grep "replied" | awk '{print $6,$2}' | sort -nr -k1 > A3Q1.txt
+  308  cut -d ' ' -f1 A3Q1.txt | uniq -c | sort -nr -k1 | awk '$1 > 2' | awk '{print $2}' > 3Replies.txt
+  309  sed -i 's/^/^/' 3Replies.txt
+  310  grep -Ef 3Replies.txt A3Q1.txt > A3Q2.txt
+  311  cut -d ' ' -f1 A3Q1.txt | uniq -c | sort -nr -k1 | awk '$1 > 2' | awk '{print $1}' > histogramData.txt
+  312  ~/gnuplot/src/gnuplot
+  313  awk '{ gsub(/ /,""); print }' original.tsv | awk '$2 != $6' | grep "replied" | awk '{print $6,$4}' | grep -Ef testReplies.txt | awk '{print $2}' | tr ',' '\n' | tr -d '"' | sort | uniq -c | sort -nr -k1 | awk '{print $2}' | head -n 30 | sort > A3Common.txt
+  314  awk '{ gsub(/ /,""); print }' original.tsv | awk '$2 != $6' | grep "replied" | awk '{print $6,$4}' | grep -Ef 3Replies.txt | awk '{print $2}' | tr ',' '\n' | tr -d '"' | sort | uniq -c | sort -nr -k1 | awk '{print $2}' | head -n 30 | sort > A3Common.txt
+  315  awk '{ gsub(/ /,""); print }' extend.tsv | cut -f4,5 | awk '$2 != $6' | cut -f1 | tr ',' '\n' | tr -d '"' | sort | uniq -c | sort -nr -k1 | awk '{print $2}' | head -n 30 | sort > A2Common.txt
+  316  diff -ic A2Common.txt A3Common.txt
+  317  ls
+  318  cd cs131
+  319  ls
+  320  awk '{ gsub(/ /,""); print }' original.tsv | awk '$2 != $6' | grep "replied" | cut -f2,6 | sort -nr -k2
+  321  awk '{ gsub(/ /,""); print }' original.tsv | awk '$2 != $6' | grep "replied" | cut -f2,6 | sort -nr -k2 | 
+  322  awk '{ gsub(/ /,""); print }' original.tsv | awk '$2 != $6' | grep "replied" | awk '{print $6,$2} | sort -nr -k2
+  323  awk '{ gsub(/ /,""); print }' original.tsv | awk '$2 != $6' | grep "replied" | awk '{print $6,$2}' | sort -nr -k2
+  324  awk '{ gsub(/ /,""); print }' original.tsv | awk '$2 != $6' | grep "replied" | awk '{print $6,$2}' | sort -nr -k1 | head
+  325  awk '{ gsub(/ /,""); print }' original.tsv | awk '$2 != $6' | grep "replied" | awk '{print $6,$2}' | sort -nr -k1 > A3Q1.txt
+  326  head original.tsv 
+  327  wc -l A3Q1.txt 
+  328  cut -f1 A3Q1.txt | wc -c | head
+  329  cut -f1 A3Q1.txt | head
+  330  cut -f1 " " A3Q1.txt | head
+  331  cut -d ' ' A3Q1.txt | head
+  332  cut -d ' ' -f1 A3Q1.txt | head
+  333  cut -d ' ' -f1 A3Q1.txt | wc -c | head
+  334  cut -d ' ' -f1 A3Q1.txt | uniq | wc -c
+  335  cut -d ' ' -f1 A3Q1.txt | uniq -c | wc -l
+  336  cut -d ' ' -f1 A3Q1.txt | uniq -c | head
+  337  cut -d ' ' -f1 A3Q1.txt | uniq -c | sort -nr -k1 | head
+  338  cut -d ' ' -f1 A3Q1.txt | uniq -c | sort -nr -k1 | cut -f1 |head
+  339  cut -d ' ' -f1 A3Q1.txt | uniq -c | sort -nr -k1 | cut -d ' ' -f1 | head
+  340  cut -d ' ' -f1 A3Q1.txt | uniq -c | sort -nr -k1 | head
+  341  cut -d ' ' -f1 A3Q1.txt | uniq -c | sort -nr -k1 | awk '{print $1}'
+  342  cut -d ' ' -f1 A3Q1.txt | uniq -c | sort -nr -k1 | awk '{print $1}' | wc -l
+  343  cut -d ' ' -f1 A3Q1.txt | uniq -c | sort -nr -k1 | awk '{$1 > 2}' | head
+  344  cut -d ' ' -f1 A3Q1.txt | uniq -c | sort -nr -k1 | awk '$1 > 2' | head
+  345  cut -d ' ' -f1 A3Q1.txt | uniq -c | sort -nr -k1 | awk '$1 > 2' | tail
+  346  cut -d ' ' -f1 A3Q1.txt | uniq -c | sort -nr -k1 | awk '$1 > 2' | cut -f2 | head
+  347  cut -d ' ' -f1 A3Q1.txt | uniq -c | sort -nr -k1 | awk '$1 > 2' | cut -d '\t' -f2 | head
+  348  cut -d ' ' -f1 A3Q1.txt | uniq -c | sort -nr -k1 | awk '$1 > 2' | cut -d -f2 | head
+  349  cut -d ' ' -f1 A3Q1.txt | uniq -c | sort -nr -k1 | awk '$1 > 2' | awk {print $2} | head
+  350  cut -d ' ' -f1 A3Q1.txt | uniq -c | sort -nr -k1 | awk '$1 > 2' | awk '{print $2}' | head
+  351  cut -d ' ' -f1 A3Q1.txt | uniq -c | sort -nr -k1 | awk '$1 > 2' | awk '{print $2}' > 3Replies.txt
+  352  awk '{print $2}' A3Q1.txt | fgrep -f 3Replies.txt | head
+  353  awk '{print $2}' A3Q1.txt | fgrep -f 3Replies.txt | wc -l
+  354  awk '{print $1}' A3Q1.txt | fgrep -f 3Replies.txt | wc -l
+  355  fgrep -f "^" A3Q1.txt 3Replies.txt | head
+  356  fgrep -f -P "^" A3Q1.txt 3Replies.txt | head
+  357  fgrep -f -e "^" A3Q1.txt 3Replies.txt | head
+  358  fgrep -f -e '^' A3Q1.txt 3Replies.txt | head
+  359  fgrep A3Q1.txt 3Replies.txt | head
+  360  fgrep -f A3Q1.txt 3Replies.txt | head
+  361  head 3Replies.txt 
+  362  head A3Q1.txt 
+  363  cut -f1 A3Q1.txt | fgrep 3Replies.txt | head
+  364  cut -f1 A3Q1.txt | fgrep 3Replies.txt 
+  365  cut -f1 A3Q1.txt | head
+  366  awk '{print $1}' A3Q1.txt | head
+  367  awk '{print $1}' A3Q1.txt | fgrep 3Replies.txt | head
+  368  awk '{print $1}' A3Q1.txt | fgrep 3Replies.txt 
+  369  awk '{print $1}' A3Q1.txt | fgrep -F 3Replies.txt 
+  370  awk '{print $1}' A3Q1.txt | fgrep -f 3Replies.txt 
+  371  fgrep -f A3Q1.txt 3Replies.txt | head
+  372  awk '{print $1}' A3Q1.txt | fgrep -f 3Replies.txt | head
+  373  tr ' ' ', ' A3Q1.txt testoutput.txt
+  374  tr ' ' ', ' A3Q1.txt > testoutput.txt
+  375  tr ' ' ', ' <A3Q1.txt > testoutput.txt
+  376  head testoutput.txt 
+  377  fgrep testoutput.txt 3Replies.txt 
+  378  fgrep -f testoutput.txt 3Replies.txt 
+  379  fgrep -f -P '^/' testoutput.txt 3Replies.txt 
+  380  grep -f testoutput.txt 3Replies.txt 
+  381  grep -f 3Replies.txt testoutput.txt 
+  382  grep -f 3Replies.txt A3Q1.txt 
+  383  ls
+  384  sed 's/^/^/' 3Replies.txt > testReplies.txt
+  385  head testReplies.txt 
+  386  grep -f 3Replies.txt A3Q1.txt 
+  387  grep -Ef 3Replies.txt A3Q1.txt 
+  388  grep -Ef testReplies.txt A3Q1.txt 
+  389  grep -Ef testReplies.txt A3Q1.txt > A3Q2.txt
+  390  head A3Q2.txt 
+  391  cut -d ' ' -f1 A3Q1.txt | uniq -c | sort -nr -k1 | awk '$1 > 2'
+  392  cut -d ' ' -f1 A3Q1.txt | uniq -c | sort -nr -k1 | awk '$1 > 2' | cut -f1 | head
+  393  cut -d ' ' -f1 A3Q1.txt | uniq -c | sort -nr -k1 | awk '$1 > 2' | awk '{print $1}' | head
+  394  cut -d ' ' -f1 A3Q1.txt | uniq -c | sort -nr -k1 | awk '$1 > 2' | awk '{print $1}' > histogramData.txt
+  395  ~/gnuplot/src/gnuplot
+  396  cp filename.svg A3Q3.svg
+  397  ls
+  398  mv 0439139597.txt /ws4
+  399  mv 0439139597.txt ws4
+  400  ls
+  401  mv 043935806X.txt ws4
+  402  mv 0525947647.txt ws4
+  403  mv 12790857.txt ws4
+  404  mv 31048862.txt ws4
+  405  ls
+  406  mv 50732546.txt ws4
+  407  ls
+  408  mv CUSTOMERS/ ws4
+  409  mv PRODUCTS/ ws4
+  410  ls
+  411  head 3Replies.txt 
+  412  head testReplies.txt 
+  413  head original.tsv 
+  414  awk '{ gsub(/ /,""); print }' original.tsv | awk '$2 != $6' | grep "replied" | cut -f2,4,6
+  415  awk '{ gsub(/ /,""); print }' original.tsv | awk '$2 != $6' | grep "replied" | cut -f2,4,6 | head
+  416  head original.tsv 
+  417  awk '{ gsub(/ /,""); print }' original.tsv | awk '$2 != $6' | grep "replied" | awk '{print $6,$2}' | head
+  418  awk '{ gsub(/ /,""); print }' original.tsv | awk '$2 != $6' | grep "replied" | awk '{print $6,$4}' | head
+  419  awk '{ gsub(/ /,""); print }' original.tsv | awk '$2 != $6' | grep "replied" | awk '{print $6,$4}' | grep -Ef testReplies.txt | head
+  420  awk '{ gsub(/ /,""); print }' original.tsv | awk '$2 != $6' | grep "replied" | awk '{print $6,$4}' | grep -Ef testReplies.txt 
+  421  awk '{ gsub(/ /,""); print }' original.tsv | awk '$2 != $6' | grep "replied" | awk '{print $6,$4}' | grep -Ef testReplies.txt | awk '{print $2}' | head
+  422  awk '{ gsub(/ /,""); print }' original.tsv | awk '$2 != $6' | grep "replied" | awk '{print $6,$4}' | grep -Ef testReplies.txt | awk '{print $2}' | tr ',' '\n' | tr -d '"' | sort | uniq -c | sort -nr -k1 | head -n 31
+  423  awk '{ gsub(/ /,""); print }' original.tsv | awk '$2 != $6' | grep "replied" | awk '{print $6,$4}' | grep -Ef testReplies.txt | awk '{print $2}' | tr ',' '\n' | tr -d '"' | sort | uniq -c | sort -nr -k1 | head -n 31 > MostCommonReplied.txt
+  424  cut -f4,5 extendascii.tsv | awk '{ gsub(/ /,""); print } | awk '$2 != $6' | grep -P "type=replied" | cut -f1 | tr ',' '\n' | tr -d '"' | sort | uniq -c | sort -nr -k1 | head -n 31
+  425  cut -f4,5 extendascii.tsv | awk '{ gsub(/ /,""); print }' | awk '$2 != $6' | grep -P "type=replied" | cut -f1 | tr ',' '\n' | tr -d '"' | sort | uniq -c | sort -nr -k1 | head -n 31
+  426  cut -f4,5 extend.tsv | awk '{ gsub(/ /,""); print }' | awk '$2 != $6' | grep -P "type=replied" | cut -f1 | tr ',' '\n' | tr -d '"' | sort | uniq -c | sort -nr -k1 | head -n 31
+  427  awk '{ gsub(/ /,""); print }' extend.tsv | cut -f4,5 | awk '$2 != $6' | grep -P "type=replied" | cut -f1 | tr ',' '\n' | tr -d '"' | sort | uniq -c | sort -nr -k1 | head -n 31
+  428  awk '{ gsub(/ /,""); print }' extend.tsv | cut -f4,5 | awk '$2 != $6' | grep -P "type=replied" | cut -f1 | tr ',' '\n' | tr -d '"' | sort | uniq -c | sort -nr -k1 | head -n 30 > MostCommonA2.txt
+  429  awk '{ gsub(/ /,""); print }' extend.tsv | cut -f4,5 | awk '$2 != $6' | grep -P "type=replied" | cut -f1 | tr ',' '\n' | tr -d '"' | sort | uniq -c | sort -nr -k1 | awk '{print $2}' | head -n 30 > MostCommonA2.txt
+  430  head MostCommonA2.txt 
+  431  awk '{ gsub(/ /,""); print }' original.tsv | awk '$2 != $6' | grep "replied" | awk '{print $6,$4}' | grep -Ef testReplies.txt | awk '{print $2}' | tr ',' '\n' | tr -d '"' | sort | uniq -c | sort -nr -k1 | awk '{print $2}' | head -n 30 > MostCommonReplied.txt
+  432  head MostCommonReplied.txt 
+  433  sort MostCommonReplied.txt 
+  434  head MostCommonReplied.txt 
+  435  sort -i MostCommonReplied.txt 
+  436  head MostCommonReplied.txt 
+  437  sort MostCommonReplied.txt > A3Common.txt
+  438  sort MostCommonA2.txt > A2Common.txt
+  439  diff A2Common.txt A3Common.txt 
+  440  awk '{ gsub(/ /,""); print }' original.tsv | awk '$2 != $6' | grep "replied" | awk '{print $6,$4}' | grep -Ef testReplies.txt | awk '{print $2}' | tr ',' '\n' | tr -d '"' | sort | uniq -c | sort -nr -k1 | awk '{print $2}' | head -n 30 | sort > A3Common.txt
+  441  awk '{ gsub(/ /,""); print }' extend.tsv | cut -f4,5 | awk '$2 != $6' | cut -f1 | tr ',' '\n' | tr -d '"' | sort | uniq -c | sort -nr -k1 | awk '{print $2}' | head -n 30 | sort > A2Common.txt
+  442  diff A2Common.txt A3Common.txt 
+  443  diff -c A2Common.txt A3Common.txt 
+  444  diff -ic A2Common.txt A3Common.txt 
+  445  ls
+  446  rm 3Replies.txt 
+  447  rm A2Common.txt 
+  448  rm A3Common.txt 
+  449  rm A3Q1.txt
+  450  rm A3Q2.txt
+  451  rm A3Q3.svg
+  452  rm MostCommonA2.txt 
+  453  rm MostCommonReplied.txt 
+  454  rm filename.svg 
+  455  rm histogramData.txt 
+  456  rm testReplies.txt 
+  457  rm testoutput.txt 
+  458  ls
+  459  script a3.txt
+  460  cut -d ' ' -f1 A3Q1.txt | uniq -c | sort -nr -k1 | awk '$1 > 2' | awk '{print $1}' > histogramData.txt
+  461  head histogramData.txt 
+  462  ls
+  463  rm 3Replies.txt 
+  464  rm A3Q
+  465  rm A3Q1.txt 
+  466  rm A3Q2.txt 
+  467  rm A3Q3.svg 
+  468  rm a3.txt 
+  469  ls
+  470  rm histogramData.txt 
+  471  script a3.txt
+  472  vi a3.txt
+  473  ls
+  474  mkdir A3
+  475  mv A3Q1.txt A3
+  476  mv A3Q2.txt A3
+  477  mv A3Q3.svg A3
+  478  mv a3.txt A3
+  479  cd A3
+  480  ls
+  481  git add .
+  482  git status
+  483  git commit -m "Finished A3"
+  484  git push -u origin master
+  485  exit
+  486   for item in $(cut -f2 amazon_reviews_us_Books_v1_02.tsv | sort | uniq -c | sort -nr -k1 | awk '{print $2}' | head -n1000); do (grep $item amazon_reviews_us_Books_v1_02.tsv > $item.txt); done
+  487  for item in $(cut -f2 amazon_reviews_us_Books_v1_02.tsv | sort | uniq -c | sort -nr -k1 | awk '{print $2}' | head -n100); do (grep $item amazon_reviews_us_Books_v1_02.tsv > $item.txt); done
+  488  history > cmds.log
+  489  ls
+  490  cd cs131
+  491  ls
+  492  mv A2Common.txt A3
+  493  mv A3Common.txt A3
+  494  mv histogramData.txt A3
+  495  ls
+  496  mv 3Replies.txt A3
+  497  ls
+  498  cd ws3
+  499  ls
+  500  head ws3.txt
+  501  cd ..
+  502  ls
+  503  cut -f2 amazon_reviews_us_Books_v1_02.tsv | sort | uniq -c | sort -nr -k1 | head
+  504  head amazon_reviews_us_Books_v1_02.tsv 
+  505  head -n 2 amazon_reviews_us_Books_v1_02.tsv 
+  506  cut -f2 amazon_reviews_us_Books_v1_02.tsv | sort | uniq -c | head
+  507  cut -f2 amazon_reviews_us_Books_v1_02.tsv | sort | uniq -c | sort -nr -k1 | head
+  508  cut -f2 amazon_reviews_us_Books_v1_02.tsv | sort | uniq -c | sort -nr -k1 | cut -f2 | head
+  509  cut -f2 amazon_reviews_us_Books_v1_02.tsv | sort | uniq -c | sort -nr -k1 | awk '{print $2}' | head
+  510  cut -f2 amazon_reviews_us_Books_v1_02.tsv | sort | uniq -c | sort -nr -k1 | awk '{print $2}' | head -n1000 > topReviewers.txt
+  511  head topReviewers.txt 
+  512  wc -l topReviewers.txt 
+  513  tail topReviewers.txt 
+  514  for item in [topReviewers.txt]; do [echo $item]; done
+  515  for item in [topReviewers.txt]; do echo $item; done
+  516  for item in topReviewers.txt; do echo $item; done
+  517  for item in cut -f2 amazon_reviews_us_Books_v1_02.tsv | sort | uniq -c | sort -nr -k1 | awk '{print $2}' | head -n1000; do echo $item; done
+  518  for item in [cut -f2 amazon_reviews_us_Books_v1_02.tsv | sort | uniq -c | sort -nr -k1 | awk '{print $2}' | head -n1000]; do echo $item; done
+  519  for item in $(cut -f2 amazon_reviews_us_Books_v1_02.tsv | sort | uniq -c | sort -nr -k1 | awk '{print $2}' | head -n10); do echo $item; done
+  520  head -n 2 amazon_reviews_us_Books_v1_02.tsv 
+  521  for item in $(cut -f2 amazon_reviews_us_Books_v1_02.tsv | sort | uniq -c | sort -nr -k1 | awk '{print $2}' | head -n10); do $(grep amazon_reviews_us_Books_v1_02.tsv $item); done
+  522  grep amazon_reviews_us_Books_v1_02.tsv 12
+  523  grep 12345 amazon_reviews_us_Books_v1_02.tsv 
+  524  for item in $(cut -f2 amazon_reviews_us_Books_v1_02.tsv | sort | uniq -c | sort -nr -k1 | awk '{print $2}' | head -n10); do $($item grep amazon_reviews_us_Books_v1_02.tsv); done
+  525  for item in $(cut -f2 amazon_reviews_us_Books_v1_02.tsv | sort | uniq -c | sort -nr -k1 | awk '{print $2}' | head -n10); do $(grep $item amazon_reviews_us_Books_v1_02.tsv); done
+  526  head -n 2 amazon_reviews_us_Books_v1_02.tsv 
+  527  for item in $(cut -f2 amazon_reviews_us_Books_v1_02.tsv | sort | uniq -c | sort -nr -k1 | awk '{print $2}' | head -n10); do $(echo $item); done
+  528  for item in $(cut -f2 amazon_reviews_us_Books_v1_02.tsv | sort | uniq -c | sort -nr -k1 | awk '{print $2}' | head -n10); do (echo $item); done
+  529  for item in $(cut -f2 amazon_reviews_us_Books_v1_02.tsv | sort | uniq -c | sort -nr -k1 | awk '{print $2}' | head -n10); do (grep $item amazon_reviews_us_Books_v1_02.tsv); done
+  530  for item in $(cut -f2 amazon_reviews_us_Books_v1_02.tsv | sort | uniq -c | sort -nr -k1 | awk '{print $2}' | head -n1000); do (grep $item amazon_reviews_us_Books_v1_02.tsv > $item.txt); done
+  531  ls
+  532  head 20595117.txt 
+  533  wc -l 20595117.txt 
+  534  ls
+  535  rm 20595117.txt 
+  536  rm 39569598.txt 
+  537  rm 45041039.txt 
+  538  rm452
+  539  rm 45273033.txt 
+  540  rm 49693975.txt 
+  541  rm 50122160.txt 
+  542  rm 50732546.txt 
+  543  rm 50776149.txt 
+  544  rm 50913245.txt 
+  545  rm 52615377.txt 
+  546  ls
+  547  mkdir ws5
+  548  cp amazon_reviews_us_Books_v1_02.tsv ws5
+  549  ls -l
+  550  mv amazon_reviews_us_Books_v1_02.tsv ws5
+  551  cd ws5
+  552  ls
+  553  script ws5.txt
+  554  mv amazon_reviews_us_Books_v1_02.tsv ..
+  555  cd ..
+  556  ls
+  557  rm -rf ws5
+  558  ls
+  559  mkdir ws5
+  560  mv amazon_reviews_us_Books_v1_02.tsv ws5
+  561  cd ws5
+  562  script a5.txt
+  563  rm a5.txt
+  564  script a5.txt
+  565  head a5.txt
+  566  vi a5.txt
+  567  vi cmds.log 
+  568  git push cmds.log
+  569  git add cmds.log 
+  570  git add a5.txt
+  571  git status
+  572  git push -u origin master
+  573  git commit -m "Finished ws5"
+  574  git push -u origin master
+  575  exi
+  576  exit
+  577  tmux new-session -s homework
+  578  exit
+  579  ls
+  580  cd cs131
+  581  ls
+  582  cd ws5
+  583  ls
+  584  ls | wc -l
+  585  exit
+  586  ls
+  587  cd cs131
+  588  ls
+  589  cd ws5
+  590  tmux attach -t homework
+  591  tmux list-sessions
+  592  cd ..
+  593  tmux list-sessions
+  594  cd cs131
+  595  tmux list-sessions
+  596  exit
+  597  DATETIME=`date +"%Y%m%d_%H%M%S"`
+  598  mkdir PRODUCTS
+  599  grep 043935806X amazon_reviews_us_Books_v1_02.tsv | awk -F "\t" '{print}' > PRODUCTS/043935806X.txt
+  600  cd PRODUCTS
+  601  cp 043935806X.txt 043935806X.$DATETIME.txt
+  602  echo -e 'US\t01\t01\t043935806X\t01\trandomreview\tuhh\t0\t0\t0\tN\tN\treview contents\t2022-10-17' >> 043935806X.20221017_183817.txt 
+  603  ln -s 043935806X.20221017_183817.txt 043935806X.LATEST.txt
+  604  crontab -e
+  605  mkdir PRODUCTS
+  606  ls
+  607  mv PRODUCTS cs131
+  608  cd cd131
+  609  cd cs11
+  610  cd cs131
+  611  ls
+  612  cd A1
+  613  ls
+  614  cd ..
+  615  cd A2
+  616  ls
+  617  cd ..
+  618  wget    https://s3.amazonaws.com/amazon-reviews-pds/tsv/amazon_reviews_us_Books_v1_02.tsv.gz
+  619  ls
+  620  gunzip amazon_reviews_us_Books_v1_02.tsv.gz 
+  621  ls
+  622  grep 043935806X amazon_reviews_us_Books_v1_02.tsv | awk -F "\t" '{print $8,$9}' > ~/PRODUCTS/043935806X.txt
+  623  grep 043935806X amazon_reviews_us_Books_v1_02.tsv | awk -F "\t" '{print $8,$9}' > PRODUCTS/043935806X.txt
+  624  cd PRODUCTS
+  625  head 043935806X.txt 
+  626  date
+  627  cd ..
+  628  grep 043935806X amazon_reviews_us_Books_v1_02.tsv | awk -F "\t" '{print}' > PRODUCTS/043935806X.txt
+  629  cd PRODUCTS/
+  630  head 043935806X.txt 
+  631  DATETIME = 'date'
+  632  DATETIME='date'
+  633  DATETIME
+  634  echo $DATETIME
+  635  DATETIME=date
+  636  echo DATETIME
+  637  echo $DATETIME
+  638  DATETIME=`date`
+  639  echo $DATETIME
+  640  cp 043935806X.txt 043935806X$DATETIME.txt 
+  641  date+"%Y"
+  642  date +"%Y"
+  643  date +"%D%H%"
+  644  date +"%D%H:%I%M%S"
+  645  date +"%D%H/%I:%M:%S"
+  646  date +"%Y%m%d_%I%M%S"
+  647  date +"%Y%m%d_%H%M%S"
+  648  DATETIME=`date +"%Y%m%d_%H%M%S"`
+  649  cp 043935806X.txt 043935806X$DATETIME.txt 
+  650  ls
+  651  cp 043935806X.txt 043935806X.$DATETIME.txt 
+  652  ls
+  653  rm 043935806X20221017_181348.txt 
+  654  ls
+  655  cd ..
+  656  head amazon_reviews_us_Books_v1_02.tsv 
+  657  echo -e 'US\t01\t01\t043935806X\t01\trandomreview\tuhh\t0\t0\t0\tN\tN\treview contents\t2022-10-17'
+  658  ls
+  659  cd PRODUCTS
+  660  ls
+  661  echo -e 'US\t01\t01\t043935806X\t01\trandomreview\tuhh\t0\t0\t0\tN\tN\treview contents\t2022-10-17' >> 043935806X.20221017_181348.txt 
+  662  tail 043935806X.20221017_181348.txt 
+  663  ln -s 043935806X.20221017_181348.txt 043935806X.LATEST.txt
+  664  ls
+  665  crontab
+  666  crontab test
+  667  crontab -e
+  668  awk "{print $8}" 043935806X.LATEST.txt | head
+  669  awk "{print $7}" 043935806X.LATEST.txt | head
+  670  cut -f8 043935806X.LATEST.txt | head
+  671  count=0; total=0; for i in $( awk '{ print $2; }' file.txt );do total=$(echo $total+$i | bc ); ((count++)); done; echo "scale=2; $total / $count" | bc
+  672  count=0; total=0; for i in $( awk '{ print $2; }' file.txt );do total=$(echo $total+$i | bc ); count=0; total=0; for i in $( awk '{ print $2; }' file.txt );do total=$(echo $total+$i | bc ); ((count++)); done; echo "scale=2; $total / $count" | bc; 
+  673  count=0; total=0; for i in $( awk '{ print $8; }' 043935806X.LATEST.txt ); do total=$(echo $total+$i | bc ); ((count++)); done; echo "scale=2; $total / $count" | bc
+  674  awk '{ print $8; }' 043935806X.LATEST.txt
+  675  count=0; total=0; for i in $( cut -f8 043935806X.LATEST.txt ); do total=$(echo $total+$i | bc ); ((count++)); done; echo "scale=2; $total / $count" | bc
+  676  crontab -e
+  677  crontab -l
+  678  crontab -e
+  679  crontab -l
+  680  crontab -e
+  681  count=0; total=0; for i in $(cut -f8 043935806X.LATEST.txt); do total=$(echo $total+$i | bc ); ((count++)); done; echo "scale=2; $total / $count" | bc > 043935806X.AVGRATING.txt
+  682  head 043935806X.AVGRATING.txt 
+  683  crontab -r
+  684  crontab -l
+  685  ls
+  686  cd ..
+  687  ls
+  688  rm -rf PRODUCTS/
+  689  script ws6.txt
+  690  cd ..
+  691  ls
+  692  cd cs131/
+  693  ls
+  694  vi ws6.txt 
+  695  history > cmds.log
+  696  vi cmds.log 
+  697  mkdir ws6
+  698  mv ws6.txt ws6
+  699  mv cmds.log ws6
+  700  cd ws6
+  701  git add .
+  702  git commit -m "Finished ws6"
+  703  git push -u oriign master
+  704  git push -u origin master
+  705  exit
+  706  cut -f5 extend.tsv | grep "type=retweeted" | egrep -o "[0-9]+" > retweetIDs.txt
+  707  cut -f1,2 original.tsv | egrep -f retweetIDs.txt | cut -f2 | sort | uniq -c | sort -nr -k1 | head
+  708  grep "retweeted" extend.tsv | cut -f2,5 | awk -F '\t' 'match($2, /[0-9]+/) {print substr($2,RSTART,RLENGTH) "\t" $1}' | sort -n -k1 > retweetCombined.txt
+  709  cut -f1,2 original.tsv | egrep -f retweetIDs.txt | sort -n -k1 > retweetedIDs.txt
+  710  join retweetedIDs.txt retweetedCombined.txt > combinedIDs.txt
+  711  join retweetedIDs.txt retweetCombined.txt > combinedIDs.txt
+  712  awk '{print $2 "\t" $3}' combinedIDs.txt > A4Q1.txt
+  713  cut -f1 A4Q1.txt | uniq -c | sort -nr -k1 | awk '$1 > 2' | awk '{print $2}' > 3Retweets.txt
+  714  sed -i 's/^/^/' 3Retweets.txt
+  715  grep -Ef 3Retweets.txt A4Q1.txt > A4Q2.txt
+  716  cut -f1 A4Q1.txt | uniq -c | sort -nr -k1 | awk '$1 > 2' | awk '{print $1}' > histogramData.txt
+  717  ~/gnuplot/src/gnuplot
+  718  cut -f1,4 original.tsv | grep -f retweetIDs.txt | cut -f2 | tr ',' '\n' | tr -d '"' | sort | uniq -c | sort -nr -k1 | awk '{print $2}' | head -n 30 | sort > A4Common.txt
+  719  cut -f4,5 extend.tsv | awk '$2 != $6' | cut -f1 | tr ',' '\n' | tr -d '"' | sort | uniq -c | sort -nr -k1 | awk '{print $2}' | head -n 30 | sort > A2Common.txt
+  720  diff -ic A2Common.txt A4Common.txt
+  721  ls
+  722  ls -l
+  723  cd cs131
+  724  ls
+  725  rm original.tsv 
+  726  rm extend.tsv 
+  727  cp /home/test/A1/downloaded_tweets_extend_original_nolf2.tsv original.tsv
+  728  cp /home/test/A1/downloaded_tweets_extend_nolf2.tsv extend.tsv
+  729  ls
+  730  head original.tsv 
+  731  head extend.tsv 
+  732  cut -f4 original.tsv | head
+  733  cut -f5 original.tsv | head
+  734  cut -f5 extend.tsv | head
+  735  cut -f5 extend.tsv | grep "type=retweeted" | head
+  736  cut -f5 extend.tsv | grep "type=retweeted" | grep -P "[0-9]+" | head
+  737  cut -f5 extend.tsv | grep "type=retweeted" | egrep "[0-9]+" | head
+  738  cut -f5 extend.tsv | grep "type=retweeted" | egrep -o "[0-9]+" | head
+  739  cut -f5 extend.tsv | grep "type=retweeted" | egrep -o "[0-9]+" > retweetIDs.txt
+  740  head original.tsv 
+  741  cut -f1,2 original.tsv | egrep -f retweetIDs.txt | head
+  742  cut -f1,2 original.tsv | egrep -f retweetIDs.txt | cut -f2 | head
+  743  cut -f1,2 original.tsv | egrep -f retweetIDs.txt | cut -f2 | sort | uniq -c | sort -nr -k1 | head
+  744  awk '{ gsub(/ /,""); print }' original.tsv | awk '$2 != $6' | grep "retweeted" | awk '{print $6,$2}' | sort -nr -k1 > A4Q1.txt
+  745  head A4Q1.txt 
+  746  cat A4Q1.txt 
+  747  head original.tsv 
+  748  awk '{ gsub(/ /,""); print }' original.tsv | awk '$2 != $6' | grep "replied" | awk '{print $6,$2}' | sort -nr -k1 > A4Q1.txt
+  749  cat A4Q1.txt 
+  750  awk '{ gsub(/ /,""); print }' extend.tsv | awk '$2 != $6' | grep "retweeted" | awk '{print $6,$2}' | sort -nr -k1 > A4Q1.txt
+  751  head A4Q1.txt 
+  752  tail A4Q1.txt 
+  753  grep "retweeted" extend.tsv | awk '{print $6,$2}' | sort -nr -k1 > A4Q1.txt
+  754  head A4Q1.txt 
+  755  tail A4Q1.txt 
+  756  awk '{ gsub(/ /,""); print }' extend.tsv | awk -F '\t' '$2 != $6' | grep "retweeted" | awk '{print $6,$2}' | sort -nr -k1 > A4Q1.txt
+  757  head A4Q1.txt 
+  758  tail A4Q1.txt 
+  759  awk '{ gsub(/ /,""); print }' extend.tsv | awk -F '\t' '$2 != $6' | grep "retweeted" | awk -F '\t' '{print $6,$2}' | sort -nr -k1 > A4Q1.txt
+  760  head A4Q1.txt 
+  761  tail A4Q1.txt 
+  762  head extend.tsv 
+  763  awk '{ gsub(/ /,""); print }' extend.tsv | awk -F '\t' '$2 != $6' | grep "retweeted" | awk -F '\t' '{print $6,$2}' | sort -nr -k1 > A4Q1.txtawk '{ gsub(/ /,""); print }' extend.tsv | grep "retweeted" | cut -f2,6 | head
+  764  awk '{ gsub(/ /,""); print }' extend.tsv | grep "retweeted" | cut -f2,6 | head
+  765  awk '{ gsub(/ /,""); print }' extend.tsv | grep "retweeted" | cut -f2,6 | tail
+  766  awk '{ gsub(/ /,""); print }' extend.tsv | grep "retweeted" | head
+  767  ls
+  768  rm A4Q1.txt
+  769  ls
+  770  rm A4Q1.txtawk 
+  771  head retweetIDs.txt 
+  772  cut -f5 extend.tsv | grep "type=retweeted" | egrep -o "[0-9]+" | head
+  773  head extend.tsv 
+  774  egrep "retweeted" extend.tsv | head
+  775  egrep "retweeted" original.tsv | head
+  776  cut -f2,5 extend.tsv | grep "type=retweeted" | egrep -o "[0-9]+" | head
+  777  cut -f2,5 extend.tsv | grep "type=retweeted" | awk
+  778  cut -f2,5 extend.tsv | grep "type=retweeted" | egrep -o "[0-9]+" | head
+  779  cut -f2,5 extend.tsv | grep "type=retweeted" | egrep -o "[0-9]+" | paste - - -d | head
+  780  cut -f2,5 extend.tsv | grep "type=retweeted" | egrep -o "[0-9]+" | paste - -| head
+  781  cut -f2,5 extend.tsv | grep "type=retweeted" | egrep -o "[0-9]+" | paste - - | head
+  782  cut -f2,5 extend.tsv | grep "type=retweeted" | egrep -o "[0-9]+" | paste - - > retweetCombined.txt
+  783  head retweetIDs.txt 
+  784  cut -f1,2 original.tsv | egrep -f retweetIDs.txt | cut -f2 | sort | uniq -c | sort -nr -k1 | head
+  785  cut -f1,2 original.tsv | egrep -f retweetIDs.txt | cut -f2 | head
+  786  cut -f1,2 original.tsv | egrep -f retweetIDs.txt | head
+  787  cut -f1,2 original.tsv | egrep -f retweetIDs.txt | sort -nr -k1 | head
+  788  cut -f1,2 original.tsv | egrep -f retweetIDs.txt | sort -n -k1 | head
+  789  cut -f1,2 original.tsv | egrep -f retweetIDs.txt | sort -n -k1 > retweetedIDs.txt
+  790  sort -n -k2 retweetCombined.txt >retweetCombined.txt 
+  791  head retweetCombined.txt 
+  792  cut -f2,5 extend.tsv | grep "type=retweeted" | egrep -o "[0-9]+" | paste - - > retweetCombined.txt
+  793  head retweetCombined.txt 
+  794  sort -n -k2 retweetCombined.txt | head
+  795  cut -f2,5 extend.tsv | grep "type=retweeted" | egrep -o "[0-9]+" | head
+  796  head extend.tsv
+  797  cut -f2,5 extend.tsv | grep "type=retweeted" | egrep -o "[0-9]+" | tail
+  798  cut -f2,5 extend.tsv | grep "type=retweeted" | egrep -o "[0-9]+" | paste - - | head
+  799  cut -f2,5 extend.tsv | grep "type=retweeted" | egrep -o "[0-9]+" | paste - - > retweetCombined.txt
+  800  ls
+  801  head retweetedIDs.txt 
+  802  head retweetCombined.txt 
+  803  sort -n -k2 retweetCombined.txt | head
+  804  sort -nr -k2 retweetCombined.txt | head
+  805  head retweetIDs.txt 
+  806  head retweetCombined.txt 
+  807  tail retweetIDs.txt 
+  808  tail retweetCombined.txt 
+  809  cut -f2,5 extend.tsv | grep "type=retweeted" | egrep -o "[0-9]+" | sed 'N;s/\n/\t/' | head
+  810  cut -f2,5 extend.tsv | grep "type=retweeted" | egrep -o "[0-9]+" | sed 'N;s/\n/\t/' | tail
+  811  head extend.tsv 
+  812  cut -f2,5 extend.tsv | head
+  813  grep "type=rewteeted" extend.tsv | cut -f2,5 | head
+  814  grep "type=retweeted" extend.tsv | cut -f2,5 | head
+  815  grep "type=retweeted" extend.tsv | cut -f2,5 | tail
+  816  grep "type=retweeted" extend.tsv | cut -f2,5 | egrep "[0-9]+" | head
+  817  grep "type=retweeted" extend.tsv | cut -f2,5 | egrep -o "[0-9]+" | head
+  818  grep "type=retweeted" extend.tsv | cut -f2,5 | egrep -o "[0-9]+" | tail
+  819  grep "type=retweeted" extend.tsv | cut -f2,5 | egrep -o "[0-9]+" | paste - - | tail
+  820  grep "type=retweeted" extend.tsv | cut -f2,5 | egrep -o "[0-9]+" | paste - - | head
+  821  grep "type=retweeted" extend.tsv | cut -f2,5 | awk {$2 ~ [0-9]+} | head
+  822  grep "type=retweeted" extend.tsv | cut -f2,5 | awk '{$2 ~ [0-9]+}' | head
+  823  grep "type=retweeted" extend.tsv | cut -f2,5 | awk '{print $1 $2}' | head
+  824  grep "type=retweeted" extend.tsv | cut -f2,5 | awk -F '\t' '{print $1 $2}' | head
+  825  grep "type=retweeted" extend.tsv | cut -f2,5 | awk -F '\t' '$2 ~ [0-9]+ {print $1 $2}' | head
+  826  grep "type=retweeted" extend.tsv | cut -f2,5 | awk -F '\t' '$2 ~ /[0-9]+/ {print $1 $2}' | head
+  827  grep "type=retweeted" extend.tsv | cut -f2,5 | awk -F '\t' '$2 ~ /[0-9]+/ {print $1 $2[0]}' | head
+  828  grep "type=retweeted" extend.tsv | cut -f2,5 | awk -F '\t' 'match($2, /[0-9]+/) {print $1 substr($2,RSTART,RLENGTH)}' | head
+  829  grep "type=retweeted" extend.tsv | cut -f2,5 | awk -F '\t' 'match($2, /[0-9]+/) {print $1  substr($2,RSTART,RLENGTH)}' | head
+  830  grep "type=retweeted" extend.tsv | cut -f2,5 | awk -F '\t' 'match($2, /[0-9]+/) {print $1  "  " substr($2,RSTART,RLENGTH)}' | head
+  831  grep "type=retweeted" extend.tsv | cut -f2,5 | awk -F '\t' 'match($2, /[0-9]+/) {print $1  "\t" substr($2,RSTART,RLENGTH)}' | head
+  832  grep "type=retweeted" extend.tsv | cut -f2,5 | awk -F '\t' 'match($2, /[0-9]+/) {print $1  "\t" substr($2,RSTART,RLENGTH)}' | tail
+  833  grep "type=retweeted" extend.tsv | cut -f2,5 | awk -F '\t' 'match($2, /[0-9]+/) {print $1 "\t" substr($2,RSTART,RLENGTH)}' > retweetCombined.txt
+  834  head retweetIDs.txt 
+  835  head retweetedIDs.txt 
+  836  cut -f1,2 original.tsv | egrep -f retweetIDs.txt | sort -n -k1 | head
+  837  head original.tsv 
+  838  cut -f2 original.tsv | sort -n | head
+  839  cut -f2 original.tsv | sort -n | tail
+  840  cut -f2 original.tsv | head
+  841  cut -f2 original.tsv | sort -nr | head
+  842  cut -f2 original.tsv | sort -nr | tail
+  843  cut -f2 original.tsv | sort -n | head
+  844  cut -f2 original.tsv | sort -n > 1.txt
+  845  vi 1.txt
+  846  rm 1.txt
+  847  head retweetedIDs.txt 
+  848  cut -f2 original.tsv | sort -n > 1.txt
+  849  rm 1.txt
+  850  cut -f2 original.tsv | sort -n > 1.txt
+  851  vi 1.txt
+  852  rm 1.txt
+  853  sort -n -k1 retweetCombined.txt | head
+  854  sort -n -k1 retweetCombined.txt | tail
+  855  tail retweetedIDs.txt 
+  856  sort -n retweetIDs.txt | head
+  857  sort -n retweetIDs.txt | tail
+  858  grep retweetCombined.txt 1520501147580043264
+  859  grep 1520501147580043264 retweetCombined.txt 
+  860  grep 1501582959991734279 retweetIDs.txt 
+  861  grep 1501582959991734279 
+  862  sort -n -k2 retweetCombined.txt | head
+  863  sort -n -k2 retweetCombined.txt | tail
+  864  head retweetedIDs.txt 
+  865  sort -n -k2 retweetCombined.txt > retweetCombinedSorted.txt
+  866  head retweetCombinedSorted.txt 
+  867  rm retweetCombined.txt 
+  868  mv retweetCombinedSorted.txt retweetCombined.txt
+  869  sort -n -k2 retweetCombined.txt > retweetCombined.txt
+  870  head retweetCombined.txt 
+  871  extend.tsv | cut -f2,5 | awk -F '\t' 'match($2, /[0-9]+/) {print $1 "\t" substr($2,RSTART,RLENGTH)}' > retweetCombined.txtcut -f2,5 extend.tsv | awk -F '\t' 'match($2, /[0-9]+/) {print $1 "\t" substr($2,RSTART,RLENGTH)}' > retweetCombined.txt
+  872  cut -f2,5 extend.tsv | awk -F '\t' 'match($2, /[0-9]+/) {print $1 "\t" substr($2,RSTART,RLENGTH)}' > retweetCombined.txt
+  873  head retweetCombined.txt 
+  874  cut -f2,5 extend.tsv | awk -F '\t' 'match($2, /[0-9]+/) {print $1 "\t" substr($2,RSTART,RLENGTH)}' | sort -n -k2 > retweetCombined.txt
+  875  head retweetCombined.txt 
+  876  head retweetdID
+  877  head retweetedIDs.txt 
+  878  info join
+  879  join -j retweetCombined.txt retweetedIDs.txt | head
+  880  join -1 2 -2 1 retweetCombined.txt retweetedIDs.txt | head
+  881  join -1 1 -2 2 retweetedIDs.txt retweetCombined.txt | head
+  882  cut -f2,5 extend.tsv | awk -F '\t' 'match($2, /[0-9]+/) {print substr($2,RSTART,RLENGTH) "\t" $1}' | sort -n -k1 > combined.txt
+  883  head combined.txt 
+  884  head retweetedIDs.txt 
+  885  grep "retweeted" extend.tsv | cut -f2,5 | awk -F '\t' 'match($2, /[0-9]+/) {print substr($2,RSTART,RLENGTH) "\t" $1}' | sort -n -k1 > combined.txt
+  886  head combined.txt 
+  887  grep "retweeted" extend.tsv | cut -f2,5 | awk -F '\t' 'match($2, /[0-9]+/) {print substr($2,RSTART,RLENGTH) "\t" $1}' | sort -n -k1 > combined.txt
+  888  wc -l combined.txt 
+  889  cut -f2,5 extend.tsv | awk -F '\t' 'match($2, /[0-9]+/) {print substr($2,RSTART,RLENGTH) "\t" $1}' | sort -n -k1 > combined.txt
+  890  wc -l combined.txt 
+  891  grep "retweeted" extend.tsv | cut -f2,5 | awk -F '\t' 'match($2, /[0-9]+/) {print substr($2,RSTART,RLENGTH) "\t" $1}' | sort -n -k1 > combined.txt
+  892  head combined.txt 
+  893  head retweetedIDs.txt 
+  894  join combined.txt retweetedIDs.txt | head
+  895  wc -l combined.txt 
+  896  wc -l retweetedIDs.txt 
+  897  join combined.txt retweetedIDs.txt | wc -l
+  898  join combined.txt retweetedIDs.txt > combinedIDs.txt
+  899  tail combinedIDs.txt 
+  900  awk '{print $2 $3}' combinedIDs.txt | head
+  901  awk '{print $2 "\t" $3}' combinedIDs.txt | head
+  902  awk '{print $2 "\t" $3}' combinedIDs.txt > combinedIDs.txt
+  903  head combinedIDs.txt 
+  904  awk '{print $2 "\t" $3}' combinedIDs.txt > combinedIDs.txt
+  905  join combined.txt retweetedIDs.txt > combinedIDs.txt
+  906  awk '{print $2 "\t" $3}' combinedIDs.txt > A4Q1.txt
+  907  head A4Q1.txt 
+  908  cut -f2 A4Q1.txt | uniq -c | sort -nr -k1 | awk '$1 > 2' | awk '{print $2}' > 3Retweets.txt
+  909  head 3Retweets.txt 
+  910  join retweetedIDs.txt retweetedCombined.txt > combinedIDs.txt
+  911  join retweetedIDs.txt combined.txt > combinedIDs.txt
+  912  awk '{print $2 "\t" $3}' combinedIDs.txt > A4Q1.txt
+  913  cut -f1 A4Q1.txt | uniq -c | sort -nr -k1 | awk '$1 > 2' | awk '{print $2}' > 3Retweets.txt
+  914  sed -i 's/^/^/' 3Retweets.txt
+  915  grep -Ef 3Retweets.txt A4Q1.txt > A4Q2.txt
+  916  head A4Q2.txt 
+  917  ls
+  918  cut -f1 A4Q1.txt | uniq -c | sort -nr -k1 | awk '$1 > 2' | awk '{print $1}' > histogramData.txt
+  919  head histogramData.txt 
+  920  cd ..
+  921  ls
+  922  cd gnuplot
+  923  ls
+  924  cd ..
+  925  cd cs131
+  926  ls ./
+  927  ls ~/
+  928  ~/gnuplot/src/gnuplot
+  929  head original.tsv 
+  930  grep "retweeted" extend.tsv | head
+  931  grep "retweeted" original.tsv | head
+  932  grep "retweeted" extend.tsv | awk '{print $6,$4}' | grep -Ef 3Retweets.txt | awk '{print $2}' | tr ',' '\n' | tr -d '"' | sort | uniq -c | sort -nr -k1 | awk '{print $2}' | head -n 30 | sort > A4Common.txt
+  933  head A4
+  934  head A4Common.txt 
+  935  grep "retweeted" extend.tsv | awk '{print $6,$4}' | head
+  936  head extend.tsv 
+  937  head retweetIDs.txt 
+  938  head original.tsv 
+  939  cut -f1,4 original.tsv | grep -F retweetIDs.txt | head
+  940  cut -f1,4 original.tsv | fgrep retweetIDs.txt | head
+  941  cut -f1,4 original.tsv | head
+  942  cut -f1,4 original.tsv | grep 1517876638461038592 
+  943  cut -f1,4 original.tsv | grep -f retweetIDs.txt | head
+  944  cut -f1,4 original.tsv | grep -f retweetIDs.txt | cut -f2 | head
+  945  cut -f1,4 original.tsv | grep -f retweetIDs.txt | cut -f2 | tr ',' '\n' | tr -d '"' | sort | uniq -c | sort -nr -k1 | awk '{print $2}' | head -n 30 | sort > A4Common.txt
+  946  head A4
+  947  head A4Common.txt 
+  948  cut -f4 extend.tsv | tr ',' '\n' | tr -d '"' | sort -r | uniq -c | sort -nr -k1 | head -n 31 > A2Common.txt
+  949  head A2Common.txt 
+  950  cut -f4,5 extend.tsv | awk '$2 != $6' | cut -f1 | tr ',' '\n' | tr -d '"' | sort | uniq -c | sort -nr -k1 | awk '{print $2}' | head -n 30 | sort > A2Common.txt
+  951  head A2Common.txt 
+  952  diff -ic A2Common.txt A4Common.txt
+  953  cd ..
+  954  wget https://github.com/gephi/gephi/releases/download/v0.9.7/gephi-0.9.7-linux-x64.tar.gz
+  955  gunzip gephi-0.9.7-linux-x64.tar.gz 
+  956  ls
+  957  tar -xvf gephi-0.9.7-linux-x64.tar gephi
+  958  tar -xvf gephi-0.9.7-linux-x64.tar
+  959  ls
+  960  rm gephi-0.9.7-linux-x64.tar 
+  961  rm gnuplot.tar
+  962  mv gephi-0.9.7/ gephi
+  963  ls
+  964  cd gephi
+  965  ls
+  966  cd bin
+  967  ls
+  968  gephi
+  969  ls -l
+  970  gephi.exe
+  971  gephi
+  972  cd ..
+  973  bin/gephi
+  974  cd ..
+  975  ls
+  976  cd cs131
+  977  ls
+  978  rm A2Common.txt 
+  979  rm A4Common.txt 
+  980  rm A4Q1.txt 
+  981  rm A4Q2.txt 
+  982  rm A4Q3.svg 
+  983  rm combined.txt 
+  984  rm combinedIDs.txt 
+  985  rm histogramData.txt 
+  986  rm retweetCombined.txt 
+  987  rm retweetIDs.txt 
+  988  rm retweetedIDs.txt 
+  989  head topReviewers.txt 
+  990  rm 3Retweets.txt 
+  991  script a4.txt
+  992  mkdir A4
+  993  ls
+  994  mv A4Q3.svg A4
+  995  mv a4.txt A4
+  996  git add A4
+  997  git commit -m "Finished first part of A4"
+  998  git push -u origin master
+  999  exit
+ 1000  ls
+ 1001  crontab -l
+ 1002  crontab -d
+ 1003  crontab -r
+ 1004  crontab -
+ 1005  crontab -l
+ 1006  ls
+ 1007  cd cs131
+ 1008  ls
+ 1009  mv A2Common.txt A4
+ 1010  mv A4Common.txt A4
+ 1011  mv A4Q1.txt A4
+ 1012  mv A4Q2.txt A4
+ 1013  mv combinedIDs.txt A4
+ 1014  mv histogramData.txt A4
+ 1015  mv retweetCombined.txt A4
+ 1016  mv retweetIDs.txt A4
+ 1017  mv retweetedIDs.txt A4
+ 1018  mv topReviewers.txt A4
+ 1019  ls
+ 1020  mv 3Retweets.txt A4
+ 1021  ls
+ 1022  grep amazon_reviews_us_Books_v1_02.tsv 043935806X
+ 1023  grep 043935806X amazon_reviews_us_Books_v1_02.tsv 
+ 1024  head amazon_reviews_us_Books_v1_02.tsv 
+ 1025  grep 043935806X amazon_reviews_us_Books_v1_02.tsv | cut -f14 | head
+ 1026  grep 043935806X amazon_reviews_us_Books_v1_02.tsv | cut -f14 | sed /and/d 
+ 1027  grep 043935806X amazon_reviews_us_Books_v1_02.tsv | cut -f14 | sed /and/d | wc -l
+ 1028  grep 043935806X amazon_reviews_us_Books_v1_02.tsv | cut -f14 | wc -l
+ 1029  grep 043935806X amazon_reviews_us_Books_v1_02.tsv | cut -f14 | awk '{gsub("and", ""); gsub("or", ""); gsub("if", ""); gsub("in", ""); gsub("it", ""); print}'
+ 1030  grep 043935806X amazon_reviews_us_Books_v1_02.tsv | cut -f14 | awk '{gsub("and", ""); gsub("or", ""); gsub("if", ""); gsub("in", ""); gsub("it", ""); print}' | wc -l
+ 1031  grep 043935806X amazon_reviews_us_Books_v1_02.tsv | cut -f14 | awk '{gsub("and", ""); gsub("or", ""); gsub("if", ""); gsub("in", ""); gsub("it", ""); gsub(".", ""); gsub(",", ""); gsub(";", ""); print}' | head
+ 1032  grep 043935806X amazon_reviews_us_Books_v1_02.tsv | cut -f14 | awk '{gsub("and", ""); gsub("or", ""); gsub("if", ""); gsub("in", ""); gsub("it", ""); gsub("\.", ""); gsub("\,", ""); gsub("\;", ""); print}' | head
+ 1033  grep 043935806X amazon_reviews_us_Books_v1_02.tsv | cut -f14 | awk '{gsub("and", ""); gsub("or", ""); gsub("if", ""); gsub("in", ""); gsub("it", ""); gsub("\.", ""); gsub("\,", ""); gsub("\;", ""); print}'
+ 1034  grep 043935806X amazon_reviews_us_Books_v1_02.tsv | cut -f14 | awk '{gsub("and", ""); gsub("or", ""); gsub("if", ""); gsub("in", ""); gsub("it", ""); gsub("\.", ""); print}'
+ 1035  grep 043935806X amazon_reviews_us_Books_v1_02.tsv | cut -f14 | awk '{gsub("and", ""); gsub("or", ""); gsub("if", ""); gsub("in", ""); gsub("it", ""); print}'
+ 1036  grep 043935806X amazon_reviews_us_Books_v1_02.tsv | cut -f14 | awk '{gsub("and", ""); gsub("or", ""); gsub("if", ""); gsub("in", ""); gsub("it", ""); print}' | head
+ 1037  grep 043935806X amazon_reviews_us_Books_v1_02.tsv | cut -f14 | awk '{gsub("and", ""); gsub("or", ""); gsub("if", ""); gsub("in", ""); gsub("it", ""); print}' | head -n1
+ 1038  grep 043935806X amazon_reviews_us_Books_v1_02.tsv | cut -f14 | awk '{gsub("and", ""); gsub("or", ""); gsub("if", ""); gsub("in", ""); gsub("the", ""); print}' | head -n1
+ 1039  grep 043935806X amazon_reviews_us_Books_v1_02.tsv | cut -f14 | awk '{gsub("and", ""); gsub("or", ""); gsub("if", ""); gsub("in", ""); gsub("it", ""); gsub("\.", ""); print}' | head -n1
+ 1040  grep 043935806X amazon_reviews_us_Books_v1_02.tsv | cut -f14 | awk '{gsub("and", ""); gsub("or", ""); gsub("if", ""); gsub("in", ""); gsub("it", ""); gsub(\., ""); print}' | head -n1
+ 1041  grep 043935806X amazon_reviews_us_Books_v1_02.tsv | cut -f14 | awk '{gsub("and", ""); gsub("or", ""); gsub("if", ""); gsub("in", ""); gsub("it", ""); gsub(".", ""); print}' | head -n1
+ 1042  grep 043935806X amazon_reviews_us_Books_v1_02.tsv | cut -f14 | awk '{gsub("and", ""); gsub("or", ""); gsub("if", ""); gsub("in", ""); gsub("it", ""); gsub(/\./, ""); print}' | head -n1
+ 1043  grep 043935806X amazon_reviews_us_Books_v1_02.tsv | cut -f14 | awk '{gsub("and", ""); gsub("or", ""); gsub("if", ""); gsub("in", ""); gsub("it", ""); gsub(/\./, ""); gsub(/\;/, ""); gsub(/\,/, ""); print}' | head -n1
+ 1044  grep 043935806X amazon_reviews_us_Books_v1_02.tsv | cut -f14 | awk '{gsub("and", ""); gsub("or", ""); gsub("if", ""); gsub("in", ""); gsub("it", ""); gsub(/\./, ""); gsub(/\;/, ""); gsub(/\,/, ""); print}' | head -n2
+ 1045  grep 043935806X amazon_reviews_us_Books_v1_02.tsv | cut -f14 | awk '{gsub("and", ""); gsub("or", ""); gsub("if", ""); gsub("in", ""); gsub("it", ""); gsub(/\./, ""); gsub(/\;/, ""); gsub(/\,/, ""); print}' | head -n3
+ 1046  grep 043935806X amazon_reviews_us_Books_v1_02.tsv | cut -f14 | head
+ 1047  grep 043935806X amazon_reviews_us_Books_v1_02.tsv | cut -f14 | awk '{gsub("and", ""); gsub("or", ""); gsub("if", ""); gsub("in", ""); gsub("it", ""); gsub(/\./, ""); gsub(/\;/, ""); gsub(/\,/, ""); print}' | head
+ 1048  grep 043935806X amazon_reviews_us_Books_v1_02.tsv | cut -f14 | awk '{gsub("and", ""); gsub("or", ""); gsub("if", ""); gsub("in", ""); gsub("it", ""); gsub(/\./, ""); gsub(/\;/, ""); gsub(/\,/, ""); gsub(/<[A-Za-z]+/>, ""); print}' | head
+ 1049  grep 043935806X amazon_reviews_us_Books_v1_02.tsv | cut -f14 | awk '{gsub("and", ""); gsub("or", ""); gsub("if", ""); gsub("in", ""); gsub("it", ""); gsub(/\./, ""); gsub(/\;/, ""); gsub(/\,/, ""); gsub(/*<[A-Za-z]+*/*>, ""); print}' | head
+ 1050  grep 043935806X amazon_reviews_us_Books_v1_02.tsv | cut -f14 | awk '{gsub("and", ""); gsub("or", ""); gsub("if", ""); gsub("in", ""); gsub("it", ""); gsub(/\./, ""); gsub(/\;/, ""); gsub(/\,/, ""); print}' | sed -e 's/<[^>]*>//g' | head
+ 1051  grep 043935806X amazon_reviews_us_Books_v1_02.tsv | cut -f14 | awk '{gsub("and", ""); gsub("or", ""); gsub("if", ""); gsub("in", ""); gsub("it", ""); gsub(/\./, ""); gsub(/\;/, ""); gsub(/\,/, ""); print}' | head
+ 1052  grep 043935806X amazon_reviews_us_Books_v1_02.tsv | cut -f14 | awk '{gsub("and", ""); gsub("or", ""); gsub("if", ""); gsub("in", ""); gsub("it", ""); gsub(/\./, ""); gsub(/\;/, ""); gsub(/\,/, ""); print}' | sed -e 's/<[^>]*>//g' | head
+ 1053  script ws7.txt
+ 1054  ls
+ 1055  mkdir ws7
+ 1056  mv ws7.txt ws7
+ 1057  git add ws7
+ 1058  cd ws7
+ 1059  ls
+ 1060  history > cmds.log
