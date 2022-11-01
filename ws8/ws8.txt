@@ -16,6 +16,7 @@ grep -oE '[[:alpha:]]+' verifiedCleaned.txt | sort | uniq -c | sort -nr > mostCo
 grep -oE '[[:alpha:]]+' unverifiedCleaned.txt | sort | uniq -c | sort -nr > mostCommonUnverified.txt
 
 Uses grep to find the most common words and sorts them by count.
+Code from: https://unix.stackexchange.com/questions/316556/find-n-most-frequent-words-in-a-file-with-a-stop-words-list-from-the-command-lin
 
 Script started on 2022-11-01 09:37:42-07:00 [TERM="xterm-256color" TTY="/dev/pts/1" COLUMNS="120" LINES="30"]
 ]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131[00m$ awk -F '\t' '{if ($12 == "Y") print $14}' amazon_reviews_us_Books_v1_02.tsv > verified.txt
