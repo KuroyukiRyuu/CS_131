@@ -1,0 +1,44 @@
+ 1146  awk -F '\t' '{$12 = "Y"; print $12 $14}' amazon_reviews_us_Books_v1_02.tsv | wc -l
+ 1147  wc -l amazon_reviews_us_Books_v1_02.tsv 
+ 1148  awk -F '\t' '{$12 == "Y"; print $12 $14}' amazon_reviews_us_Books_v1_02.tsv | wc -l
+ 1149  awk -F '\t' '{$12 == "Y"; print $12 $14}' amazon_reviews_us_Books_v1_02.tsv | head
+ 1150  awk -F '\t' '{if ($12 == "Y") print $12 $14}' amazon_reviews_us_Books_v1_02.tsv | head
+ 1151  awk -F '\t' '{if ($12 == "Y") print $12 $14}' amazon_reviews_us_Books_v1_02.tsv > verified.txt
+ 1152  awk -F '\t' '{if ($12 == "N") print $12 $14}' amazon_reviews_us_Books_v1_02.tsv > verified.txt
+ 1153  awk -F '\t' '{if ($12 == "Y") print $12 $14}' amazon_reviews_us_Books_v1_02.tsv > verified.txt
+ 1154  awk -F '\t' '{if ($12 == "N") print $12 $14}' amazon_reviews_us_Books_v1_02.tsv > unverified.txt
+ 1155  awk -F '\t' '{if ($12 == "N") print $14}' amazon_reviews_us_Books_v1_02.tsv > unverified.txt
+ 1156  awk -F '\t' '{if ($12 == "Y") print $14}' amazon_reviews_us_Books_v1_02.tsv > verified.txt
+ 1157  head verified.txt 
+ 1158  tail verified.txt 
+ 1159  awk '{gsub("and", ""); gsub("or", ""); gsub("if", ""); gsub("in", ""); gsub("it", ""); gsub(/\./, ""); gsub(/\;/, ""); gsub(/\,/, ""); print}' verified.txt > verifiedCleaned.txt
+ 1160  ls
+ 1161  head verified
+ 1162  head verifiedCleaned.txt 
+ 1163  awk '{gsub("and", ""); gsub("or", ""); gsub("if", ""); gsub("in", ""); gsub("it", ""); gsub(/\./, ""); gsub(/\;/, ""); gsub(/\,/, ""); print}' verified.txt > verifiedCleaned.txt
+ 1164  awk '{gsub("and", ""); gsub("or", ""); gsub("if", ""); gsub("in", ""); gsub("it", ""); print}' verified.txt > verifiedCleaned.txt
+ 1165  awk '{gsub("and", ""); gsub("or", ""); gsub("if", ""); gsub("in", ""); gsub("it", ""); print}' unverified.txt > unverifiedCleaned.txt
+ 1166  head unverified
+ 1167  head unverifiedCleaned.txt 
+ 1168  sort unverifiedCleaned.txt | uniq -c | sort -nr -k1 | head
+ 1169  grep -oE '[[:alpha:]]+' unverifiedCleaned.txt | sort | uniq -c | sort -nr
+ 1170  grep -oE '[[:alpha:]]+' unverifiedCleaned.txt | sort | uniq -c | sort -nr | head
+ 1171  awk '{gsub("and", ""); gsub("or", ""); gsub("if", ""); gsub("in", ""); gsub("it", ""); gsub("the", ""); gsub("of", ""); gsub("to", ""); gsub("a", ""); gsub("is", ""); gsub("I", "");, gsub("that's", ""); gsub("that", ""); gsub("this", ""); print}' unverified.txt > unverifiedCleaned.txt
+
+
+ 1172  awk '{gsub("and", ""); gsub("or", ""); gsub("if", ""); gsub("in", ""); gsub("it", ""); gsub("the", ""); gsub("of", ""); gsub("to", ""); gsub("a", ""); gsub("is", ""); gsub("I", ""); gsub("that's", ""); gsub("that", ""); gsub("this", ""); print}' unverified.txt > unverifiedCleaned.txt
+
+
+ 1173  awk '{gsub("and", ""); gsub("or", ""); gsub("if", ""); gsub("in", ""); gsub("it", ""); gsub("the", ""); gsub("of", ""); gsub("to", ""); gsub("a", ""); gsub("is", ""); gsub("I", ""); gsub("that's", ""); gsub("that", ""); gsub("this", ""); print}' unverified.txt > unverifiedCleaned.txt
+ 1174  awk '{gsub("and", ""); gsub("or", ""); gsub("if", ""); gsub("in", ""); gsub("it", ""); gsub("the", ""); gsub("of", ""); gsub("to", ""); gsub("a", ""); gsub("is", ""); gsub("I", ""); gsub("thats", ""); gsub("that", ""); gsub("this", ""); print}' unverified.txt > unverifiedCleaned.txt
+ 1175  grep -oE '[[:alpha:]]+' unverifiedCleaned.txt | sort | uniq -c | sort -nr | head
+ 1176  grep -oE '[[:alpha:]]+' unverifiedCleaned.txt | sort | uniq -c | sort -nr > mostCommon.txt
+ 1177  vi mostCommon.txt 
+ 1178  ls
+ 1179  rm unverified.txt 
+ 1180  rm unverifiedCleaned.txt 
+ 1181  rm verified.txt 
+ 1182  rm verifiedCleaned.txt 
+ 1183  rm mostCommon.txt 
+ 1184  script ws8.txt
+ 1185  history > cmds.log
