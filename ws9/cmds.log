@@ -1,0 +1,3 @@
+ 1418  script ws9.txt
+ 1419  history < cmds.log
+ 1420  history > cmds.log
