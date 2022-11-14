@@ -1,0 +1,6 @@
+ 1553  vim numbers.sh
+ 1554  time python3 numbers.py
+ 1555  time bash numbers.sh
+ 1556  mv ws10.txt ws10
+ 1557  mv numbers.sh ws10
+ 1558  history > cmds.log

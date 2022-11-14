@@ -1,0 +1,52 @@
+Benjamin Wu
+
+Script:
+#! /bin/bash
+# Prints min, max, and average of 9th column of the Amazon reviews file
+
+FILENAME=amazon_reviews_us_Books_v1_02.tsv
+
+LINES=`wc -l $FILENAME | cut -d ' ' -f1`
+MIN=`head -2 $FILENAME | tail -1 | cut -f9`
+MAX=`head -2 $FILENAME | tail -1 | cut -f9`
+SUM=0
+
+for ((i=2;i<2500;i++));
+    do
+        NUM=`head -$i $FILENAME | tail -1 | cut -f9`
+        if [ $NUM -lt $MIN ];
+        then
+            MIN=$NUM
+        fi
+        if [ $NUM -gt $MAX ];
+        then
+            MAX=$NUM
+        fi
+        SUM=`expr $SUM + $NUM`
+    done
+
+
+AVERAGE=`echo "scale=2; $SUM/2500" | bc`
+echo $AVERAGE $MIN $MAX
+
+Explanation: Uses if statements to check for greater/less than, then replaces the variables if condition is met. Also divides the sum by the number of lines to calculate the average. Limited lines to 2500 as script was taking too long to run (did the same for the Python file).
+
+Python should run faster as it has built-in libraries for calculating these numbers.
+
+
+Script started on 2022-11-14 13:50:59-08:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="120" LINES="30"]
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131[00m$ time python3 numbers.py
+min 0 max 1150 avg 9.373349339735894
+
+real	0m0.015s
+user	0m0.015s
+sys	0m0.000s
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131[00m$ time bash numbers.sh
+9 0 1150
+
+real	0m6.619s
+user	0m8.516s
+sys	0m1.216s
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131[00m$ exit
+
+Script done on 2022-11-14 13:51:26-08:00 [COMMAND_EXIT_CODE="0"]
