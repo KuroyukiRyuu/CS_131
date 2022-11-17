@@ -1,0 +1,348 @@
+Benjamin Wu
+
+Commands used (same commands used for retweets, in a different directory):
+
+grep replied_to extend.tsv > repliedExtend.tsv
+grep replied_to original.tsv > repliedOriginal.tsv
+
+awk -F "\t" '($2 != $6) {print $6}' repliedOriginal.tsv | sort | uniq -c | sort -n -k 1 | awk '($1 >=3) {print $2}' > influencers.NOBOTS.txt
+awk -F "\t" '($2 != $6) {print $6}' repliedExtend.tsv | sort | uniq -c | sort -n -k 1 | awk '($1 >=3) {print $2}' >> influencers.NOBOTS.txt
+
+grep for all replied tweets, then filter by >3 occurences and remove all bots. 
+
+for INFL in `cat influencers.NOBOTS.txt` ; do  grep $INFL repliedOriginal.tsv | cut -f4 | tr ',' '\n' | tr -d '"' > infl_replies/$INFL.hashtags; done
+for INFL in `cat influencers.NOBOTS.txt` ; do  grep $INFL repliedOriginal.tsv | cut -f4 | tr ',' '\n' | tr -d '"' >> infl_replies/overall.hts; done
+
+For each influencer, grep in the tweet file and then create a file with the hashtags from that user ID. Also, create an file that contains the overall amount of hashtags.
+
+cut -f4 original.tsv | tr ',' '\n' | tr -d '"' > infl_replies/entire.hts
+cut -f4 extend.tsv | tr ',' '\n' | tr -d '"' >> infl_replies/entire.hts
+
+Grab both the original and the extended and create a file containing all the hashtags
+
+cd infl_replies
+sort entire.hts | uniq -c | sort -nr -k1 > sortedEntire.hts
+sort overall.hts | uniq -c | sort -nr -k1 > sorted.hts
+
+In the directory, sort the overall and entire hashtag files.
+
+output.sh:
+
+#! /bin/bash
+
+FILE=$1
+TOTALTWEETS=106569
+ID=`awk 'FNR == 1{print FILENAME}' $FILE | cut -f1 -d "."`
+for HASHTAG in `cat $FILE`;
+do
+    HOverall=`grep -w $HASHTAG sorted.hts | awk '{print $1}'`
+    HinC=`sort $FILE | uniq -c | sort -nr -k1 | grep $HASHTAG | awk '{print $1}'`
+    tweetCount=`wc -l $FILE | awk '{print $1}'`
+    HEntire=`grep -w $HASHTAG sortedEntire.hts | awk '{print $1}'`
+    freqHinC=`echo "scale=10; $HinC/$tweetCount" | bc`
+    freqHOverall=`echo "scale=10; $HEntire/$TOTALTWEETS" | bc`
+    relativeFreq=`echo "scale=10; $freqHinC/$freqHOverall" | bc`
+    echo -e $HASHTAG "\t" $ID "\t" $relativeFreq "\t" $freqHinC "\t" $HinC "\t" $HOverall "\t" $HEntire "\t" $TOTALTWEETS
+done
+
+TOTALTWEETS was calculated manually for convenience. Otherwise, grep for each hashtag in both the overall and entire hashtag files, and then compute the occurence for the own file and then echo the results.
+
+
+loop.sh:
+
+#! /bin/bash
+`echo -e "hashtag_H" "\t" "cluster_C_leader(userID)" "\t" "relative_frequency_H_C" "\t" "frequency_H_in_C" "\t" "frequency_H_overall" "\t" "count_H_in_C" "\t" "count_hashtags_in_C" "\t" "count_H_entire_dataset" "\t" "count_hashtags_entire_dataset" > retweets_hashtag_freqs.tsv`
+for file in *.hashtags
+do
+    `bash output.sh $file >> retweets_hashtag_freqs.tsv`
+done
+
+Goes through all files with the .hashtag extension and runs output.sh on each file while appending the results to the tsv file.
+
+
+
+For the retweet file, the most popular hashtag based on the relative frequency was anything related to Ukraine (StandWithUkraine, IStandWithUkraine, Ukraine), with DemVoice1, COVID, and RIP following behind. (for retweets, use uniq after sorting on k3 since there are duplicates)
+
+For the replies file, similar results, with Ukraine related hashtags at the to, followed by DemVoice1, COVID, Russia, and some GOP/Florida politics hashtags.
+
+May have switched the denominators/numerators around for the relative frequency calculation, so I sorted using sort -n -k1.
+
+
+
+
+Script started on 2022-11-17 15:20:24-08:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="120" LINES="30"]
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131[00m$ grep replied_to extend.tsv > repliedExtend.tsv
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131[00m$ grep replied_to original.tsv > repliedOriginal.tsv
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131[00m$ awk -F "\t" '($2 != $6) {print $6}' repliedOriginal.tsv | sort | uniq -c | sort -n -k 1 | awk '($1 >=3) {print $2}' > influencers.NOBOTS.txt
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131[00m$ awk -F "\t" '($2 != $6) {print $6}' repliedExtended.tsv | sort | uniq -c | sort -n -k 1 | awk '($1 >=3) {print $2}' >> influencers.NOBOTS.txt
+awk: fatal: cannot open file `repliedExtended.tsv' for reading (No such file or directory)
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131[00m$ awk -F "\t" '($2 != $6) {print $6}' repliedExtend.tsv | sort | uniq -c | sort -n -k 1 | awk '($1 >=3) {print $2}' >> influencers.NOBOTS.txt
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131[00m$ mkdir infl_replies
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131[00m$ mkdir infl_retweets
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131[00m$ 
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131[00m$ mkdir infl_retweets[1Ppliesfor INFL in `cat influencers.NOBOTS.txt` ; do  grep $INFL repliedOriginal.tsv | cut -f4 | tr ',' '\n' | tr -d '"' > infl_replies/$INFL.hashtags; done
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131[00m$ for INFL in `cat influencers.NOBOTS.txt` ; do  grep $INFL repliedOriginal.tsv | cut -f4 | tr ',' '\n' | tr -d '"' >> infl_replies/overall.hts; done
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131[00m$ for INFL in `cat influencers.NOBOTS.txt` ; do  grep $INFL repliedOriginal.tsv | cut -f4 | tr ',' '\n' | tr -d '"' >> infl_replies/overall.hts; done[K[K[K[K[K[K[K[K[K[K
+[C[C[C[K[A
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131[00m$ [C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[K
+
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[K[K[K[K[K[K[K[K[K[K[Kcut -f4 original.tsv | tr ',' '\n' | tr -d '"' > infl_replies/entire.hts
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131[00m$ cut -f4 extend.tsv | tr ',' '\n' | tr -d '"' >> infl_replies/entire.hts
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131[00m$ grep type=retweeted extend.tsv > retweetedExtend.tsv
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131[00m$ awk -F "\t" '{print $2}' retweetedExtend.tsv | sort | uniq -c | sort -n -k1 | 
+ awk '($1 >=3) {print $2}' >> retweeters.NOBOTS.txt
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131[00m$ for INFL in `cat retweeters.NOBOTS.txt` ; do  grep $INFL repliedOriginal.tsv | cut -f4 | tr ',' '\n' | tr -d '"' > infl_retweets/$INFL.hashtags; done
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131[00m$ for INFL in `cat retweeters.NOBOTS.txt` ; do  grep $INFL repliedOriginal.tsv | cut -f4 | tr ',' '\n' | tr -d '"' >> infl_retweets/overall.hts; done
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131[00m$ cut -f4 extend.tsv | tr ',' '\n' | tr -d '"' > infl_retweets/entire.hts
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131[00m$ cd infl_replies
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131/infl_replies[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131/infl_replies[00m$ sort entire.hts | uniq -c | sort -nr -k1 > sortedEntire.hts
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131/infl_replies[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131/infl_replies[00m$ sort overall.hts | uniq -c | sort -nr -k1 > sorted.hts
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131/infl_replies[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131/infl_replies[00m$ vi output.sh
+[?1049h[22;0;0t[>4;2m[?1h=[?2004h[1;30r[?12h[?12l[22;2t[22;1t[27m[23m[29m[m[H[2J[?25l[30;1H"output.sh" [New File][2;1H▽[6n[2;1H  [1;1H[>c]10;?]11;?[2;1H[94m~                                                                                                                       [3;1H~                                                                                                                       [4;1H~                                                                                                                       [5;1H~                                                                                                                       [6;1H~                                                                                                                       [7;1H~                                                                                                                       [8;1H~                                                                                                                       [9;1H~                                                                                                                       [10;1H~                                                                                                                       [11;1H~                                                                                                                       [12;1H~                                                                                                                       [13;1H~                                                                                                                       [14;1H~                                                                                                                       [15;1H~                                                                                                                       [16;1H~                                                                                                                       [17;1H~                                                                                                                       [18;1H~                                                                                                                       [19;1H~                                                                                                                       [20;1H~                                                                                                                       [21;1H~                                                                                                                       [22;1H~                                                                                                                       [23;1H~                                                                                                                       [24;1H~                                                                                                                       [25;1H~                                                                                                                       [26;1H~                                                                                                                       [27;1H~                                                                                                                       [28;1H~                                                                                                                       [29;1H~                                                                                                                       [m[30;103H0,0-1[9CAll[1;1H[?25h[?25l[30;93H^[[1;1H[30;95H[[1;1H[30;96H>[1;1H[30;97H0[1;1H[30;98H;[1;1H[30;99H1[1;1H[30;100H0[1;1H[30;101H;[1;1H[30;93H         [1;1H[?25h[?25l[30;93Hi[1;1H[30;93H [1;1H[30;1H[1m-- INSERT --[m[30;13H[K[30;103H0,1[11CAll[1;1H[?25h[?25l[34m#! [?25h[?25l/bin/bash[m[2;1H[K[3;1HFIL[3;4H[K[3;4H[?25h[?25l
+[36mFILE[m=[35m$1[m
+TOTA[4;5H[K[4;5H[?25h[?25lLTWE[?25h[?25l
+[36mTOTALTWEETS[m=[31m1[?25h[?25l06569[m
+I[5;2H[K[5;2H[?25h[?25l[36mID[m=[35m`awk [?25h[?25l[m[38;5;130m'[m[31mFNR [?25h[?25l== 1{pr[?25h[?25lint FILENA[?25h[?25lME}[m[38;5;130m'[m[35m [?25h[?25l[m[35m$FIL[?25h[?25lE[m[35m [m[38;5;130m|[m[35m cu[?25h[?25lt -f1 -d[?25h[?25l [m[38;5;130m"[m[31m.[m[38;5;130m"[m[35m`[m
+[38;5;130mfor[m HASHTA[6;11H[K[6;11H[?25h[?25lG [38;5;130min[m [35m`[m[38;5;130mcat[m[35m [m[35m$FILE[m[35m`[m;
+[38;5;130mdo[m[7;3H[K[8;1H    HOveral[8;12H[K[8;12H[?25h[?25l
+    [36mHOverall[m=[35m`[m[38;5;130mgrep[m[35m -w [m[35m$HASHTAG[m[35m sorted.hts [m[38;5;130m|[?25h[?25l[m[35m awk [m[38;5;130m'[m[31m{print $[?25h[?25l1}[m[38;5;130m'[m[35m`[m
+    [36mHinC[m=[35m`[m[38;5;130msort[m[35m [m[9;16H[K[9;16H[?25h[?25l[35m$FILE[m[35m [m[38;5;130m|[m[35m uniq -c [m[38;5;130m|[m[35m [m[38;5;130msort[m[35m -nr -k1 [m[38;5;130m|[m[35m [m[38;5;130mgrep[m[35m [m[35m$HASHTAG[m[35m [m[38;5;130m|[m[35m awk [m[38;5;130m'[m[31m{p[?25h[?25lrint $1}[m[38;5;130m'[m[35m`[m
+    [36mtweetCount[m=[35m`wc -l [m[35m$FILE[m[35m [m[38;5;130m|[m[35m awk [m[38;5;130m'[m[31m{print $1}[m[38;5;130m'[m[35m`[m[10;48H[K[10;48H[?25h[?25l
+    [36mHEntire[m=[35m`[m[38;5;130mgrep[m[35m -w [m[35m$HASHTAG[m[35m sortedEntire.hts [m[38;5;130m|[m[35m awk [m[38;5;130m'[m[31m{prin[m[11;60H[K[11;60H[?25h[?25l[31mt $1}[m[38;5;130m'[m[35m`[m
+    [36mfreqHinC[m=[35m`[m[38;5;130mecho[m[31m [m[38;5;130m"[m[31mscale=10; [m[35m$HinC[m[31m/[m[35m$tweetCount[m[38;5;130m"[m[31m [m[38;5;130m|[m[35m bc[m[12;54H[K[12;54H[?25h[?25l[35m`[m
+    [36mfreqHOverall[m=[35m`[m[38;5;130mecho[m[31m [m[38;5;130m"[m[31mscale=10; [m[35m$HEntire[m[31m/[m[35m$TOTALTWEETS[m[38;5;130m"[m[31m [m[38;5;130m|[m[35m [m[13;60H[K[13;60H[?25h[?25l[35mbc`[m
+    [36mrelativeFreq[m=[35m`[m[38;5;130mecho[m[31m [m[38;5;130m"[m[31mscale=10; [m[35m$freqHinC[m[31m/[m[35m$freqHOverall[m[38;5;130m"[m[14;59H[K[14;59H[?25h[?25l[31m [m[38;5;130m|[m[35m bc`[m
+    [38;5;130mecho[m[31m -e [m[35m$HASHTAG[m[31m [m[38;5;130m"[m[35m\t[m[38;5;130m"[m[31m [m[35m$ID[m[31m [m[38;5;130m"[m[35m\t[m[38;5;130m"[m[31m [m[35m$relativeFreq[m[31m [m[38;5;130m"[m[35m\t[m[38;5;130m"[m[31m $[m[15;56H[K[15;56H[?25h[?25l[35m$freqHinC[m[31m [m[38;5;130m"[m[35m\t[m[38;5;130m"[m[31m [m[35m$HinC[m[31m [m[38;5;130m"[m[35m\t[m[38;5;130m"[m[31m [m[35m$HOverall[m[31m [m[38;5;130m"[m[35m\t[m[38;5;130m"[m[31m [m[35m$HEntire[m[31m [m[38;5;130m"[m[35m\t[m[38;5;130m"[m[31m [m[35m$TOTALTWE[?25h[?25lETT[16;1HS[m[16;2H[K[17;1H[38;5;130mdone[m[17;5H[K[30;103H16,5[17;5H[?25h[30;1H[K[17;4H[?25l[30;93H^[[17;4H[30;93H  [17;5H[30;103H16,4[10CAll[17;4H[?25h[?25l[30;93H:[17;4H[30;93H[K[30;1H:[?2004h[?25hwq
+[?25l[?2004l"output.sh" [New] 16L, 700C written
+[23;2t[23;1t
+
+[?2004l[?1l>[?25h[>4;m[?1049l[23;0;0t]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131/infl_replies[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131/infl_replies[00m$ vi loop.sh
+[?1049h[22;0;0t[>4;2m[?1h=[?2004h[1;30r[?12h[?12l[22;2t[22;1t[27m[23m[29m[m[H[2J[?25l[30;1H"loop.sh" [New File][2;1H▽[6n[2;1H  [1;1H[>c]10;?]11;?[2;1H[94m~                                                                                                                       [3;1H~                                                                                                                       [4;1H~                                                                                                                       [5;1H~                                                                                                                       [6;1H~                                                                                                                       [7;1H~                                                                                                                       [8;1H~                                                                                                                       [9;1H~                                                                                                                       [10;1H~                                                                                                                       [11;1H~                                                                                                                       [12;1H~                                                                                                                       [13;1H~                                                                                                                       [14;1H~                                                                                                                       [15;1H~                                                                                                                       [16;1H~                                                                                                                       [17;1H~                                                                                                                       [18;1H~                                                                                                                       [19;1H~                                                                                                                       [20;1H~                                                                                                                       [21;1H~                                                                                                                       [22;1H~                                                                                                                       [23;1H~                                                                                                                       [24;1H~                                                                                                                       [25;1H~                                                                                                                       [26;1H~                                                                                                                       [27;1H~                                                                                                                       [28;1H~                                                                                                                       [29;1H~                                                                                                                       [m[30;103H0,0-1[9CAll[1;1H[?25h[?25l[30;93H^[[1;1H[30;95H[[1;1H[30;96H>[1;1H[30;97H0[1;1H[30;98H;[1;1H[30;99H1[1;1H[30;100H0[1;1H[30;101H;[1;1H[30;93H         [1;1H[?25h[?25l[30;1H[1m-- INSERT --[m[30;13H[K[30;103H0,1[11CAll[1;1H[34m#! /bin/bas[?25h[?25lh[m
+[35m`[m[38;5;130mecho[m[31m -e [m[38;5;130m"[m[31mhas[m[2;14H[K[2;14H[?25h[?25l[31mhtag_H[m[38;5;130m"[m[31m [m[38;5;130m"[m[35m\t[m[38;5;130m"[m[31m [m[38;5;130m"[m[31mclus[?25h[?25lter_C_[?25h[?25lleader(userID[?25h[?25l)[m[38;5;130m"[m[31m [m[38;5;130m"[m[35m\t[m[38;5;130m"[m[31m [m[38;5;130m"[m[31mrelative_[?25h[?25lfrequency_H_C[m[38;5;130m"[m[31m [m[38;5;130m"[m[35m\t[m[38;5;130m"[m[31m [m[38;5;130m"[m[31mfr[?25h[?25lequency_H_in_C[m[38;5;130m"[m[31m [m[38;5;130m"[m[35m\t[m[38;5;130m"[m[31m [m[38;5;130m"[m[31mfrequenn[3;1Hcy_H_overall[m[38;5;130m"[m[31m [m[3;15H[K[3;15H[?25h[?25l[38;5;130m"[m[35m\t[m[38;5;130m"[m[31m [m[38;5;130m"[m[31mcount_H_in_C[m[38;5;130m"[m[31m [m[38;5;130m"[m[35m\t[m[38;5;130m"[m[31m [m[38;5;130m"[m[31mcount_hashtags_in_C[m[38;5;130m"[m[31m [m[38;5;130m"[m[35m\t[m[38;5;130m"[m[31m [m[38;5;130m"[?25h[?25l[m[31mcount_H_entire_dataset[m[38;5;130m"[m[31m [m[38;5;130m"[m[35m\t[m[38;5;130m"[m[31m [m[38;5;130m"[m[31mcount_hashtags_entire_dd[4;1Hataset[m[4;7H[K[4;7H[?25h[?25l[38;5;130m"[m[31m [m[38;5;130m>[m[35m replies_hashtag_freqs.tsv`[m
+[38;5;130mfor[m file [38;5;130min[m *.hashtags[5;23H[K[6;1H[38;5;130mdo[m[6;3H[K[7;1H   [7;4H[K[7;4H[?25h[?25l [36mID[m=[35m`awk [m[38;5;130m'[m[31mFNR == 1{print FILENAME}[m[38;5;130m'[m[35m [m[35m$file[m[35m [m[38;5;130m|[m[35m cut -f1 -d [m[38;5;130m"[m[31m.[m[38;5;130m"[m[35m`[m
+ [8;2H[K[8;2H[?25h[?25l   [35m`bash output.sh [m[35m$file[m[35m [m[38;5;130m>>[m[35m replies_hashtag_freqs.tsv`[m
+[38;5;130mdone[m[9;5H[K[9;5H[?25h[?25l[30;1H[K[30;103H7,4[11CAll[9;4H[?25h[?25l[30;93H^[[9;4H[30;93H  [9;4H[30;93H^[[9;4H[30;93H  [9;4H[?25h[?25l[30;93H^[[9;4H[30;93H  [9;4H[30;93H^[[9;4H[30;93H  [9;4H[?25h[?25l[30;93H:[9;4H[30;93H[K[30;1H:[?2004h[?25hwq
+[?25l[?2004l"loop.sh" [New] 7L, 440C written
+[23;2t[23;1t
+
+[?2004l[?1l>[?25h[>4;m[?1049l[23;0;0t]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131/infl_replies[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131/infl_replies[00m$ bash lop[Kop.sh
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131/infl_replies[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131/infl_replies[00m$ cd ..
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131[00m$ cd infl_retweets
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131/infl_retweets[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131/infl_retweets[00m$ vi output.sh
+[?1049h[22;0;0t[>4;2m[?1h=[?2004h[1;30r[?12h[?12l[22;2t[22;1t[27m[23m[29m[m[H[2J[?25l[30;1H"output.sh" [New File][2;1H▽[6n[2;1H  [1;1H[>c]10;?]11;?[2;1H[94m~                                                                                                                       [3;1H~                                                                                                                       [4;1H~                                                                                                                       [5;1H~                                                                                                                       [6;1H~                                                                                                                       [7;1H~                                                                                                                       [8;1H~                                                                                                                       [9;1H~                                                                                                                       [10;1H~                                                                                                                       [11;1H~                                                                                                                       [12;1H~                                                                                                                       [13;1H~                                                                                                                       [14;1H~                                                                                                                       [15;1H~                                                                                                                       [16;1H~                                                                                                                       [17;1H~                                                                                                                       [18;1H~                                                                                                                       [19;1H~                                                                                                                       [20;1H~                                                                                                                       [21;1H~                                                                                                                       [22;1H~                                                                                                                       [23;1H~                                                                                                                       [24;1H~                                                                                                                       [25;1H~                                                                                                                       [26;1H~                                                                                                                       [27;1H~                                                                                                                       [28;1H~                                                                                                                       [29;1H~                                                                                                                       [m[30;103H0,0-1[9CAll[1;1H[?25h[?25l[30;93H^[[1;1H[30;95H[[1;1H[30;96H>[1;1H[30;97H0[1;1H[30;98H;[1;1H[30;99H1[1;1H[30;100H0[1;1H[30;101H;[1;1H[30;93H         [1;1H[?25h[?25l[30;1H[1m-- INSERT --[m[30;13H[K[30;103H0,1[11CAll[1;1H[34m#! /bin/bas[?25h[?25lh[m[2;1H[K[3;1HFIL[3;4H[K[3;4H[?25h[?25l
+[36mFILE[m=[35m$1[m[4;1H[K[4;1H[?25h[?25lTOTA[?25h[?25lLTWE[?25h[?25l
+[36mTOTALTWEETS[m=[31m1[?25h[?25l06569[m
+I[5;2H[K[5;2H[?25h[?25l[36mID[m=[35m`awk [?25h[?25l[m[38;5;130m'[m[31mFNR [?25h[?25l== 1{pr[?25h[?25lint FI[?25h[?25lLENA[?25h[?25lME}[m[38;5;130m'[m[35m [?25h[?25l[m[35m$FIL[?25h[?25lE[m[35m [m[38;5;130m|[m[35m cut -f1 -d[?25h[?25l [m[38;5;130m"[m[31m.[m[38;5;130m"[m[35m`[m
+[38;5;130mfor[m HA[6;7H[K[6;7H[?25h[?25lSHTAG [38;5;130min[m [35m`[m[38;5;130mcat[m[35m [m[35m$FILE[m[35m`[m;[7;1H[K[7;1H[?25h[?25l[38;5;130mdo[m
+    HOveral[8;12H[K[8;12H[?25h[?25l
+    [36mHOverall[m=[35m`[m[38;5;130mgrep[m[35m [?25h[?25l-w [m[35m$HASHTA[?25h[?25lG[m[35m [m[38;5;130msort[?25h[?25l[m[35msorted.hts [m[38;5;130m|[m[35m awk [m[38;5;130m'[m[31m{[?25h[?25lprint $1}[m[38;5;130m'[m[35m`[m
+    HinC[9;9H[K[9;9H[?25h[?25l[36mHinC[m=[35m`[m[38;5;130msort[m[35m [m[35m$FILE[m[35m [m[38;5;130m|[m[35m uniq -c [m[38;5;130m|[m[35m [m[38;5;130msort[m[35m -nr -k1 [m[38;5;130m|[m[35m [m[38;5;130mgrep[m[35m [m[35m$HASHTAG[m[35m [m[38;5;130m|[m[35m aw[?25h[?25lk [m[38;5;130m'[m[31m{print $1}[m[38;5;130m'[m[35m`[m
+    [36mtweetCount[m=[35m`wc -l [m[35m$FILE[m[35m [m[38;5;130m|[m[35m awk [m[38;5;130m'[m[31m{print $1[m[10;45H[K[10;45H[?25h[?25l[31m}[m[38;5;130m'[m[35m`[m
+    [36mHEntire[m=[35m`[m[38;5;130mgrep[m[35m -w [m[35m$HASHTAG[m[35m sortedEntire.hts [m[38;5;130m|[m[35m awk [m[38;5;130m'[m[31m{pr[m[11;58H[K[11;58H[?25h[?25l[31mint $1}[m[38;5;130m'[m[35m`[m
+    [36mfreqHinC[m=[35m`[m[38;5;130mecho[m[31m [m[38;5;130m"[m[31mscale=10; [m[35m$HinC[m[31m/[m[35m$tweetCount[m[38;5;130m"[m[31m [m[38;5;130m|[m[35m b[m[12;53H[K[12;53H[?25h[?25l[35mc`[m
+    [36mfreqHOverall[m=[35m`[m[38;5;130mecho[m[31m [m[38;5;130m"[m[31mscale=10; [m[35m$HEntire[m[31m/[m[35m$TOTALTWEETS[m[38;5;130m"[m[31m [m[38;5;130m|[m[35m [m[13;60H[K[13;60H[?25h[?25l[35mbc`[m
+    [36mrelativeFreq[m=[35m`[m[38;5;130mecho[m[31m [m[38;5;130m"[m[31mscale=10; [m[35m$freqHinC[m[31m/[m[35m$freqHOverall[m[38;5;130m"[m[14;59H[K[14;59H[?25h[?25l[31m [m[38;5;130m|[m[35m bc`[m
+    [38;5;130mecho[m[31m -e [m[35m$HASHTAG[m[31m [m[38;5;130m"[m[35m\t[m[38;5;130m"[m[31m [m[35m$ID[m[31m [m[38;5;130m"[m[35m\t[m[38;5;130m"[m[31m [m[35m$relativeFreq[m[31m [m[38;5;130m"[m[35m\t[m[38;5;130m"[m[31m [m[35m$f[m[15;57H[K[15;57H[?25h[?25l[35mreqHinC[m[31m [m[38;5;130m"[m[35m\t[m[38;5;130m"[m[31m [m[35m$HinC[m[31m [m[38;5;130m"[m[35m\t[m[38;5;130m"[m[31m [m[35m$HOverall[m[31m [m[38;5;130m"[m[35m\t[m[38;5;130m"[m[31m [m[35m$HEntire[m[31m [m[38;5;130m"[m[35m\t[m[38;5;130m"[m[31m [m[35m$TOTALTWEE[?25h[?25l[m[30;1H[K[15;120H[35mTT[16;1HS[m[16;2H[K[17;1H[38;5;130mdone[m[17;5H[K[30;103H16,4[10CAll[17;4H[?25h[?25l[30;93H:[17;4H[30;93H[K[30;1H:[?2004h[?25hwq
+[?25l[?2004l"output.sh" [New] 16L, 700C written
+[23;2t[23;1t
+
+[?2004l[?1l>[?25h[>4;m[?1049l[23;0;0t]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131/infl_retweets[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131/infl_retweets[00m$ vi loop.sh
+[?1049h[22;0;0t[>4;2m[?1h=[?2004h[1;30r[?12h[?12l[22;2t[22;1t[27m[23m[29m[m[H[2J[?25l[30;1H"loop.sh" [New File][2;1H▽[6n[2;1H  [1;1H[>c]10;?]11;?[2;1H[94m~                                                                                                                       [3;1H~                                                                                                                       [4;1H~                                                                                                                       [5;1H~                                                                                                                       [6;1H~                                                                                                                       [7;1H~                                                                                                                       [8;1H~                                                                                                                       [9;1H~                                                                                                                       [10;1H~                                                                                                                       [11;1H~                                                                                                                       [12;1H~                                                                                                                       [13;1H~                                                                                                                       [14;1H~                                                                                                                       [15;1H~                                                                                                                       [16;1H~                                                                                                                       [17;1H~                                                                                                                       [18;1H~                                                                                                                       [19;1H~                                                                                                                       [20;1H~                                                                                                                       [21;1H~                                                                                                                       [22;1H~                                                                                                                       [23;1H~                                                                                                                       [24;1H~                                                                                                                       [25;1H~                                                                                                                       [26;1H~                                                                                                                       [27;1H~                                                                                                                       [28;1H~                                                                                                                       [29;1H~                                                                                                                       [m[30;103H0,0-1[9CAll[1;1H[?25h[?25l[30;93H^[[1;1H[30;95H[[1;1H[30;96H>[1;1H[30;97H0[1;1H[30;98H;[1;1H[30;99H1[1;1H[30;100H0[1;1H[30;101H;[1;1H[30;93H         [1;1H[?25h[?25l[30;1H[1m-- INSERT --[m[30;13H[K[30;103H0,1[11CAll[1;1H[34m#! [?25h[?25l/bin/bash[m
+[35m`[m[38;5;130mecho[m[31m -e [m[38;5;130m"[m[31mhas[m[2;14H[K[2;14H[?25h[?25l[31mhtag_H[m[38;5;130m"[m[31m [m[38;5;130m"[m[35m\t[m[38;5;130m"[m[31m [m[38;5;130m"[m[31mclus[?25h[?25lter_C_leader([?25h[?25luserID)[m[38;5;130m"[m[31m [m[38;5;130m"[?25h[?25l[m[35m\t[m[38;5;130m"[m[31m [m[38;5;130m"[m[31mrelative_frequency_H_[?25h[?25lC[m[38;5;130m"[m[31m [m[38;5;130m"[m[35m\t[m[38;5;130m"[m[31m [m[38;5;130m"[m[31mfrequency_H_in_C[m[38;5;130m"[m[31m [m[38;5;130m"[?25h[?25l[m[35m\t[m[38;5;130m"[m[31m [m[38;5;130m"[m[31mfrequenn[3;1Hcy_H_overall[m[38;5;130m"[m[31m [m[38;5;130m"[m[35m\t[m[38;5;130m"[m[31m [m[38;5;130m"[m[31mcount_[m[3;27H[K[3;27H[?25h[?25l[31mH_in_C[m[38;5;130m"[m[31m [m[38;5;130m"[m[35m\t[m[38;5;130m"[m[31m [m[38;5;130m"[m[31mcount_hashtags_in_C[m[38;5;130m"[m[31m [m[38;5;130m"[m[35m\t[m[38;5;130m"[m[31m [m[38;5;130m"[m[31mcount_[?25h[?25lH_entire_dataset[m[38;5;130m"[m[31m [m[38;5;130m"[m[35m\t[m[38;5;130m"[m[31m [m[38;5;130m"[m[31mcount_hashtags_entire_dd[4;1Hataset[m[38;5;130m"[m[31m [m[38;5;130m>[m[35m [m[4;11H[K[4;11H[?25h[?25l[35mreplies_hashtag_freqs.tsv`[m
+[38;5;130mfor[m file [38;5;130min[m *.hashtags[5;23H[K[6;1H[38;5;130mdo[m[6;3H[K[7;1H    ID[7;7H[K[7;7H[?25h[?25l[36mID[m=[35m`awk [m[38;5;130m'[m[31mFNR == 1{print FILENAME}[m[38;5;130m'[m[35m [m[35m$file[m[35m [m[38;5;130m|[m[35m cut -f1 -d [m[38;5;130m"[m[31m.[m[38;5;130m"[m[35m`[m
+   [8;4H[K[8;4H[?25h[?25l [35m`bash output.sh [m[35m$file[m[35m [m[38;5;130m>>[m[35m replies_hashtag_freqs.tsv`[m
+[38;5;130mdone[m[9;5H[K[9;5H[?25h[?25l[30;1H[K[30;103H7,4[11CAll[9;4H[?25h[?25l[30;93H^[[9;4H[30;93H  [9;4H[30;93H^[[9;4H[30;93H  [9;4H[?25h[?25l[30;93H:[9;4H[30;93H[K[30;1H:[?2004h[?25hwq
+[?25l[?2004l"loop.sh" [New] 7L, 440C written
+[23;2t[23;1t
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131/infl_retweets[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131/infl_retweets[00m$ cd ..
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131[00m$ cd infl_replies/
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131/infl_replies[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131/infl_replies[00m$ ls
+1003107003693137921.hashtags  1462548977367359490.hashtags  2608740770.hashtags  58487473.hashtags
+1005846500583321601.hashtags  14707794.hashtags             2615581908.hashtags  58974496.hashtags
+1020602380096696320.hashtags  1471037967926018051.hashtags  26217297.hashtags    603724114.hashtags
+1029041185808109568.hashtags  1481658762221993984.hashtags  262219168.hashtags   605153786.hashtags
+1031000589054828544.hashtags  1483959660185067526.hashtags  26347394.hashtags    60783724.hashtags
+1046608631968538624.hashtags  1488966025257312262.hashtags  26562883.hashtags    62859096.hashtags
+105433445.hashtags            1491238215256141825.hashtags  26637348.hashtags    63942152.hashtags
+1060751816.hashtags           1498289437624647686.hashtags  27086850.hashtags    64698201.hashtags
+1066773270773547008.hashtags  1503925343434215425.hashtags  27493883.hashtags    65357102.hashtags
+1073606435580325889.hashtags  151606599.hashtags            2768501.hashtags     66917778.hashtags
+1074480192.hashtags           15207668.hashtags             2800843867.hashtags  67805368.hashtags
+1077214808.hashtags           152656121.hashtags            2809959174.hashtags  707967655031005186.hashtags
+1080844782.hashtags           153517357.hashtags            282711900.hashtags   71048726.hashtags
+1094713876132872192.hashtags  15480566.hashtags             2876041031.hashtags  711608180535640064.hashtags
+1094971056358637568.hashtags  155930120.hashtags            28785486.hashtags    713752653289955329.hashtags
+1095523459877068800.hashtags  1573800344.hashtags           288277167.hashtags   722242009.hashtags
+1096205507348623360.hashtags  15801906.hashtags             2885493519.hashtags  722528529716383744.hashtags
+1098819491780153345.hashtags  159021888.hashtags            2904241896.hashtags  728273994.hashtags
+1104524508709441536.hashtags  1598709350.hashtags           2924933104.hashtags  73397322.hashtags
+1108565574.hashtags           16041234.hashtags             2926204339.hashtags  746417655750373376.hashtags
+1109045045649424386.hashtags  16106584.hashtags             29270273.hashtags    746652122.hashtags
+1113341312.hashtags           163018653.hashtags            292891307.hashtags   756584190112591872.hashtags
+11134252.hashtags             1640929196.hashtags           29447428.hashtags    7587032.hashtags
+1113747629282930688.hashtags  1652541.hashtags              29459695.hashtags    76842602.hashtags
+1117704370630455296.hashtags  16635277.hashtags             2962813893.hashtags  775611351792222208.hashtags
+1120633726478823425.hashtags  16799453.hashtags             2975091705.hashtags  7767002.hashtags
+113165445.hashtags            168261424.hashtags            2987245137.hashtags  7768402.hashtags
+1136667717317091328.hashtags  17204460.hashtags             300236092.hashtags   785563515897524229.hashtags
+1137827292.hashtags           17477864.hashtags             306832085.hashtags   793331593.hashtags
+1155845777039810560.hashtags  175694557.hashtags            307755781.hashtags   793520017.hashtags
+117122035.hashtags            178580925.hashtags            30844417.hashtags    79352723.hashtags
+1176522535531360257.hashtags  178711456.hashtags            31194003.hashtags    795857631571156992.hashtags
+1177718582.hashtags           179313631.hashtags            3131144855.hashtags  798953701972938752.hashtags
+1189799454506799104.hashtags  180887271.hashtags            3140730672.hashtags  799717156589965312.hashtags
+1201670995435646976.hashtags  18166778.hashtags             315779591.hashtags   799911790398373888.hashtags
+1201944151.hashtags           18178850.hashtags             3246790436.hashtags  80040960.hashtags
+1201953403099893760.hashtags  182474563.hashtags            324703658.hashtags   807095.hashtags
+1218721688738615297.hashtags  18440301.hashtags             3249260534.hashtags  80802900.hashtags
+1221462414744596483.hashtags  18831926.hashtags             32871086.hashtags    813314931147816960.hashtags
+122640580.hashtags            1891490382.hashtags           3288075858.hashtags  816652616625168388.hashtags
+1236324668640047105.hashtags  189340096.hashtags            3300678755.hashtags  818975124460335106.hashtags
+1236816024281976833.hashtags  1903372854.hashtags           3303457302.hashtags  820452522494226433.hashtags
+1237314642583658496.hashtags  19084896.hashtags             3348628540.hashtags  833988769.hashtags
+1238370241169616897.hashtags  1917731.hashtags              3383159573.hashtags  834081571493785600.hashtags
+1238583088998830081.hashtags  19536434.hashtags             34116377.hashtags    843433646962999296.hashtags
+1238949674989416449.hashtags  1957610664.hashtags           34247411.hashtags    848148994102611969.hashtags
+1241938664.hashtags           19604599.hashtags             342863309.hashtags   849376476877266944.hashtags
+1247612029.hashtags           19678937.hashtags             343713611.hashtags   86626845.hashtags
+1255393579507351554.hashtags  19739126.hashtags             3453306553.hashtags  870629200348274688.hashtags
+1259851956.hashtags           198296897.hashtags            351120282.hashtags   871464343040393218.hashtags
+1260792878420291584.hashtags  19899980.hashtags             355422278.hashtags   874916178.hashtags
+1268223690480615424.hashtags  19980499.hashtags             35787166.hashtags    877968869138329601.hashtags
+1271162030393896968.hashtags  20052899.hashtags             36134224.hashtags    878247600096509952.hashtags
+1275209472.hashtags           20172153.hashtags             36372343.hashtags    878284831.hashtags
+1278236816936710144.hashtags  20280088.hashtags             368240745.hashtags   879147821915615233.hashtags
+1280478731874848769.hashtags  20559705.hashtags             381685461.hashtags   879713479254528005.hashtags
+1298372735383605249.hashtags  20751145.hashtags             3832.hashtags        885891622919184384.hashtags
+130120037.hashtags            20995648.hashtags             3866705320.hashtags  889054752230735872.hashtags
+1305817131234267136.hashtags  212445456.hashtags            39002335.hashtags    90651198.hashtags
+1307027256133345280.hashtags  21365372.hashtags             39344374.hashtags    90679076.hashtags
+1319916075476262914.hashtags  214492262.hashtags            4091551984.hashtags  90732175.hashtags
+1330859882040463362.hashtags  21525682.hashtags             409657315.hashtags   91583544.hashtags
+1335983975613939712.hashtags  2153626892.hashtags           4118285112.hashtags  919828292387061761.hashtags
+1341091420439015424.hashtags  2209106522.hashtags           41438148.hashtags    923799290.hashtags
+1344356576786866176.hashtags  22187085.hashtags             416950760.hashtags   926164634570067968.hashtags
+1349087304233541633.hashtags  22189368.hashtags             420617857.hashtags   92932981.hashtags
+1349149096909668363.hashtags  2227646515.hashtags           424144191.hashtags   935368364.hashtags
+1349418249172234241.hashtags  22277113.hashtags             43277776.hashtags    938494109844729856.hashtags
+1375592430624518156.hashtags  2234760798.hashtags           44196397.hashtags    938758536938557440.hashtags
+138168339.hashtags            2245797112.hashtags           45342709.hashtags    93880122.hashtags
+1384053916690571264.hashtags  2245822809.hashtags           45379403.hashtags    94350709.hashtags
+1387010761994682371.hashtags  225779417.hashtags            454099919.hashtags   945762498883588097.hashtags
+1387802155810271239.hashtags  2264401871.hashtags           4541535439.hashtags  949892499878719488.hashtags
+139109800.hashtags            22693817.hashtags             45977763.hashtags    950261179536084992.hashtags
+1391884924173627395.hashtags  22956018.hashtags             467726691.hashtags   950563187296030721.hashtags
+139328853.hashtags            2316383071.hashtags           46926921.hashtags    95091601.hashtags
+1393936924830732288.hashtags  2332818674.hashtags           47094621.hashtags    954005058793832448.hashtags
+1415344770130587649.hashtags  234694571.hashtags            471426839.hashtags   956266072440635392.hashtags
+14157134.hashtags             2352629311.hashtags           477934944.hashtags   9609622.hashtags
+1421835080813666306.hashtags  237176284.hashtags            48325671.hashtags    96152544.hashtags
+1424033022.hashtags           24127811.hashtags             48624704.hashtags    966695335887241219.hashtags
+14247236.hashtags             242827267.hashtags            486834536.hashtags   970994516357472257.hashtags
+14260960.hashtags             245789728.hashtags            490002009.hashtags   977204844.hashtags
+14281853.hashtags             2467791.hashtags              492736486.hashtags   978758798176382977.hashtags
+14298769.hashtags             24931027.hashtags             499154896.hashtags   978823376.hashtags
+14328072.hashtags             25268540.hashtags             51241574.hashtags    983813914596118529.hashtags
+14344823.hashtags             254515782.hashtags            519897737.hashtags   entire.hts
+14362766.hashtags             2553418813.hashtags           523411543.hashtags   loop.sh
+1442256078259974154.hashtags  255369151.hashtags            52585436.hashtags    output.sh
+1443759943.hashtags           255471924.hashtags            52770751.hashtags    overall.hts
+1449377648229195779.hashtags  255812611.hashtags            532779460.hashtags   replies_hashtag_freqs.tsv
+145499533.hashtags            2561429863.hashtags           54391597.hashtags    sorted.hts
+1456416915065352197.hashtags  2583166945.hashtags           548384458.hashtags   sortedEntire.hts
+1460176204363972613.hashtags  2598999181.hashtags           558818756.hashtags
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131/infl_replies[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131/infl_replies[00m$ cd ..
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131[00m$ cd infl_retweets/
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131/infl_retweets[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131/infl_retweets[00m$ ls
+100256670.hashtags            1433816787016114177.hashtags  302984766.hashtags           826615125297680384.hashtags
+1028022611324747776.hashtags  144904056.hashtags            3040987923.hashtags          828578052942741505.hashtags
+1031000589054828544.hashtags  1471037967926018051.hashtags  308045021.hashtags           829874722510880768.hashtags
+1060440219097423872.hashtags  1472366361322024966.hashtags  3222067490.hashtags          832019161454817280.hashtags
+1099522514366001152.hashtags  1475643712596168706.hashtags  3231054096.hashtags          838381908656603144.hashtags
+1101084489885863936.hashtags  1476778228236931073.hashtags  3264938916.hashtags          853523328.hashtags
+1148374192586481664.hashtags  1477609642184396806.hashtags  3453306553.hashtags          86010091.hashtags
+1154228711731990528.hashtags  1484955952419803137.hashtags  348764745.hashtags           870244616003403781.hashtags
+1155192156.hashtags           1492690652529889282.hashtags  388618787.hashtags           870970040878862337.hashtags
+1159870188420046848.hashtags  1494715792474230788.hashtags  39508140.hashtags            881623250.hashtags
+118166719.hashtags            1496792408792903684.hashtags  4000403652.hashtags          881978047.hashtags
+1229752606714728454.hashtags  1497976259296563200.hashtags  41186732.hashtags            885212127866257410.hashtags
+1237015212160700416.hashtags  1501582959991734279.hashtags  41653384.hashtags            915201181500297216.hashtags
+124385387.hashtags            1505184995002011649.hashtags  42091962.hashtags            935349971129311233.hashtags
+1255626720578867202.hashtags  1687521895.hashtags           4213849704.hashtags          936620120255934466.hashtags
+1261203450022359043.hashtags  17531651.hashtags             426361581.hashtags           938494109844729856.hashtags
+1263391922657337345.hashtags  177400353.hashtags            45379403.hashtags            940778288871542786.hashtags
+1264114113925402624.hashtags  18218403.hashtags             4703167472.hashtags          950215424981028864.hashtags
+1276065476041465863.hashtags  1921951394.hashtags           4757894056.hashtags          967871677399994368.hashtags
+1308267623327518725.hashtags  192374137.hashtags            48074704.hashtags            977710998.hashtags
+1309237180418666499.hashtags  195578878.hashtags            4842395709.hashtags          981436419087523840.hashtags
+1334195751753277445.hashtags  2332033299.hashtags           527445533.hashtags           997262774.hashtags
+1337664957085671424.hashtags  244954523.hashtags            578601744.hashtags           entire.hts
+1342112045555097601.hashtags  2530758806.hashtags           59028892.hashtags            loop.sh
+1353306974939738113.hashtags  2574271742.hashtags           614600545.hashtags           output.sh
+1373739644.hashtags           2676799425.hashtags           631283641.hashtags           overall.hts
+1387010761994682371.hashtags  2800413166.hashtags           711608180535640064.hashtags  replies_hashtag_freqs.tsv
+139109800.hashtags            2886667320.hashtags           738414815660670976.hashtags
+1415531907148926980.hashtags  29188599.hashtags             77726331.hashtags
+1417952253449842692.hashtags  29447428.hashtags             804582780298412032.hashtags
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131/infl_retweets[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131/infl_retweets[00m$ rm *.hashtags
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131/infl_retweets[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131/infl_retweets[00m$ ls
+entire.hts  loop.sh  output.sh  overall.hts  replies_hashtag_freqs.tsv
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131/infl_retweets[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131/infl_retweets[00m$ sort entire.hts | uniq -c | sort -nr -k1 > sortedEntire.hts
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131/infl_retweets[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131/infl_retweets[00m$ sort overall.hts | uniq -c | sort -nr -k1 > sorted.hts
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131/infl_retweets[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131/infl_retweets[00m$ s[Kbash loop.sh
+awk: fatal: cannot open file `*.hashtags' for reading (No such file or directory)
+awk: fatal: cannot open file `*.hashtags' for reading (No such file or directory)
+cat: '*.hashtags': No such file or directory
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131/infl_retweets[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131/infl_retweets[00m$ cd ..[K[K[K[K[Kls
+entire.hts  loop.sh  output.sh  overall.hts  replies_hashtag_freqs.tsv  sorted.hts  sortedEntire.hts
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131/infl_retweets[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131/infl_retweets[00m$ rm replies_hashtag_freqs.tsv 
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131/infl_retweets[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131/infl_retweets[00m$ cd ..
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131[00m$ for INFL in `cat retweeters.NOBOTS.txt` ; do  grep $INFL repliedOriginal.tsv | cut -f4 | tr ',' '\n' | tr -d '"' > infl_retweets/$INFL.hashtags; done
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131[00m$ cd repl[K[Ktwee[K[K[K[K[K[Kinfl_retweets/
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131/infl_retweets[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131/infl_retweets[00m$ bash loop.sh
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131/infl_retweets[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131/infl_retweets[00m$ ls
+100256670.hashtags            1433816787016114177.hashtags  302984766.hashtags           826615125297680384.hashtags
+1028022611324747776.hashtags  144904056.hashtags            3040987923.hashtags          828578052942741505.hashtags
+1031000589054828544.hashtags  1471037967926018051.hashtags  308045021.hashtags           829874722510880768.hashtags
+1060440219097423872.hashtags  1472366361322024966.hashtags  3222067490.hashtags          832019161454817280.hashtags
+1099522514366001152.hashtags  1475643712596168706.hashtags  3231054096.hashtags          838381908656603144.hashtags
+1101084489885863936.hashtags  1476778228236931073.hashtags  3264938916.hashtags          853523328.hashtags
+1148374192586481664.hashtags  1477609642184396806.hashtags  3453306553.hashtags          86010091.hashtags
+1154228711731990528.hashtags  1484955952419803137.hashtags  348764745.hashtags           870244616003403781.hashtags
+1155192156.hashtags           1492690652529889282.hashtags  388618787.hashtags           870970040878862337.hashtags
+1159870188420046848.hashtags  1494715792474230788.hashtags  39508140.hashtags            881623250.hashtags
+118166719.hashtags            1496792408792903684.hashtags  4000403652.hashtags          881978047.hashtags
+1229752606714728454.hashtags  1497976259296563200.hashtags  41186732.hashtags            885212127866257410.hashtags
+1237015212160700416.hashtags  1501582959991734279.hashtags  41653384.hashtags            915201181500297216.hashtags
+124385387.hashtags            1505184995002011649.hashtags  42091962.hashtags            935349971129311233.hashtags
+1255626720578867202.hashtags  1687521895.hashtags           4213849704.hashtags          936620120255934466.hashtags
+1261203450022359043.hashtags  17531651.hashtags             426361581.hashtags           938494109844729856.hashtags
+1263391922657337345.hashtags  177400353.hashtags            45379403.hashtags            940778288871542786.hashtags
+1264114113925402624.hashtags  18218403.hashtags             4703167472.hashtags          950215424981028864.hashtags
+1276065476041465863.hashtags  1921951394.hashtags           4757894056.hashtags          967871677399994368.hashtags
+1308267623327518725.hashtags  192374137.hashtags            48074704.hashtags            977710998.hashtags
+1309237180418666499.hashtags  195578878.hashtags            4842395709.hashtags          981436419087523840.hashtags
+1334195751753277445.hashtags  2332033299.hashtags           527445533.hashtags           997262774.hashtags
+1337664957085671424.hashtags  244954523.hashtags            578601744.hashtags           entire.hts
+1342112045555097601.hashtags  2530758806.hashtags           59028892.hashtags            loop.sh
+1353306974939738113.hashtags  2574271742.hashtags           614600545.hashtags           output.sh
+1373739644.hashtags           2676799425.hashtags           631283641.hashtags           overall.hts
+1387010761994682371.hashtags  2800413166.hashtags           711608180535640064.hashtags  replies_hashtag_freqs.tsv
+139109800.hashtags            2886667320.hashtags           738414815660670976.hashtags  sorted.hts
+1415531907148926980.hashtags  29188599.hashtags             77726331.hashtags            sortedEntire.hts
+1417952253449842692.hashtags  29447428.hashtags             804582780298412032.hashtags
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131/infl_retweets[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131/infl_retweets[00m$ head replies_hashtag_freqs.tsv 
+hashtag_H 	 cluster_C_leader(userID) 	 relative_frequency_H_C 	 frequency_H_in_C 	 frequency_H_overall 	 count_H_in_C 	 count_hashtags_in_C 	 count_H_entire_dataset 	 count_hashtags_entire_dataset
+MLKDay 	 1028022611324747776 	 1110.0937718410 	 .5000000000 	 1 	 1 	 48 	 106569
+IStandWithUkraine 	 1028022611324747776 	 .0058823529 .0000563015 	 .5000000000 	 1 	 1 	 85 6 	 106569
+ScottyfromMarketing 	 1031000589054828544 	 10657.0043160867 	 .1000000000 	 1 	 1 	 1 	 106569
+PutLNPlast 	 1031000589054828544 	 10657.0043160867 	 .1000000000 	 1 	 1 	 1 	 106569
+AusVotes22 	 1031000589054828544 	 5328.4737652594 	 .1000000000 	 1 	 1 	 2 	 106569
+Australia 	 1031000589054828544 	 304.4828708593 	 .1000000000 	 1 	 2 	 35 	 106569
+VoteThemOut 	 1031000589054828544 	 3552.3095340435 	 .1000000000 	 1 	 1 	 3 	 106569
+LNPDisgrace 	 1031000589054828544 	 444.0375087364 	 .1000000000 	 1 	 2 	 24 	 106569
+SolomonIslands 	 1031000589054828544 	 5328.4737652594 	 .1000000000 	 1 	 1 	 2 	 106569
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131/infl_retweets[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131/infl_retweets[00m$ mv replies_hashtag_freqs.tsv retweets_hashtag_freqs.tsv
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131/infl_retweets[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131/infl_retweets[00m$ exit
+
+Script done on 2022-11-17 15:26:00-08:00 [COMMAND_EXIT_CODE="0"]
