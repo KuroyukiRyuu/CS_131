@@ -1,0 +1,114 @@
+Benjamin Wu
+
+Explanation of commands:
+
+Q1-3:
+
+awk '{ gsub(/ /,""); print }' original.tsv | awk '$2 != $6' | grep "replied" | awk '{print $6,$2}' | sort -nr -k1 > A5Q1.txt
+cut -d ' ' -f1 A5Q1.txt | uniq -c | sort -nr -k1 | awk '$1 > 2' | awk '{print $2}' > 3Replies.txt
+
+wc -l 3Replies.txt
+wc -l A5Q1.txt
+
+awk '{ gsub(/ /,""); print }' original.tsv | awk '$2 != $6' | grep "replied" | awk '{print $2}' | sort -nr -k1 > A5Q3.txt
+grep "replied" original.tsv | cut -f6 > replyID.txt 
+egrep -cf A5Q3.txt replyID.txt
+
+Uses gsub to remove whitespace, then removes bots, greps for replied, and prints out the replied and replying user IDs. Then, cuts the replied user ID and sorts and filters by >2.
+112 users exist with >2 replies.
+
+2117 users replied to these in total (linecount of the original file)
+
+Used egrep after isolating both field 2 and 6 in separate files
+555 users who replied to someone also got replies.
+
+Q4:
+
+awk '{ gsub(/ /,""); print }' original.tsv | awk '$2 != $6' | grep "replied" | awk '{print $6  " "  $3}' | sort -nr -k1 > A5Q4.txt
+grep -f 3Replies.txt A5Q4.txt | cut -d " " -f2 | cut -c -10 > dates.txt
+sort dates.txt | uniq -c | sort -nr -k1 | head
+
+Same as Q1 except with the date field, then uses grep -f and cuts just the date, then sorts it by the output.
+
+     15 2022-02-26
+     14 2022-02-27
+     12 2022-03-18
+     11 2022-04-08
+     11 2022-03-08
+     11 2022-01-13
+     10 2022-02-24
+      9 2022-04-17
+      9 2022-04-12
+      9 2022-02-23
+
+
+
+Q5:
+
+awk '$2 != $6' original.tsv | grep "replied" | cut -f6,8 > A5Q5.txt
+sed -i 's/^/^/' 3Replies.txt
+grep -Ef 3Replies.txt A5Q5.txt | cut -f2 > text.txt
+
+
+awk '{gsub("and", ""); gsub("or", ""); gsub("if", ""); gsub("in", ""); gsub("it", ""); gsub("the", ""); gsub("of", ""); gsub("to", ""); gsub("a", ""); gsub("is", ""); gsub("I", ""); gsub("that", ""); gsub("this", ""); print}' text.txt > cleaned.txt
+
+grep -oE '[[:alpha:]]+' cleaned.txt | sort | uniq -c | sort -nr > common.txt
+
+Cuts the original ID and the text, then modifies the > 2 reply ID file to form a regex to filter out the lines. 
+Uses awk to remove common words, then grep for the most common words.
+
+Most common words apart from stopwords were COVID, omicron, Ukraine, Russia, and some political hashtags. Nothing much was different from the previous assignments, which is not surprising.
+
+
+
+
+
+
+Script started on 2022-12-05 21:32:09-08:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="120" LINES="30"]
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131[00m$ awk '{ gsub(/ /,""); print }' original.tsv | awk '$2 != $6' | grep "replied" | awk '{print $6,$2}' | sort -nr -k1 > A5Q1.txt
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131[00m$ cut -d ' ' -f1 A5Q1.txt | uniq -c | sort -nr -k1 | awk '$1 > 2' | awk '{print $2}' > 3Replies.txt
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131[00m$ wc -l 3Replies.txt
+112 3Replies.txt
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131[00m$ wc -l A5Q1.txt
+2117 A5Q1.txt
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131[00m$ awk '{ gsub(/ /,""); print }' original.tsv | awk '$2 != $6' | grep "replied" | awk '{print $2}' | sort -nr -k1 > A5Q3.txt
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131[00m$ grep "replied" original.tsv | cut -f6 > replyID.txt
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131[00m$ egrep -cf A5Q3.txt replyID.txt
+555
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131[00m$ awk '{ gsub(/ /,""); print }' original.tsv | awk '$2 != $6' | grep "replied" | awk '{print $6  " "  $3}' | sort -nr -k1 > A5Q4.txt
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131[00m$ grep -f 3Replies.txt A5Q4.txt | cut -d " " -f2 | cut -c -10 > dates.txt
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131[00m$ sort dates.txt | uniq -c | sort -nr -k1 | head
+     15 2022-02-26
+     14 2022-02-27
+     12 2022-03-18
+     11 2022-04-08
+     11 2022-03-08
+     11 2022-01-13
+     10 2022-02-24
+      9 2022-04-17
+      9 2022-04-12
+      9 2022-02-23
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131[00m$ awk '$2 != $6' original.tsv | grep "replied" | cut -f6,8 > A5Q5.txt
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131[00m$ sed -i 's/^/^/' 3Replies.txt
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131[00m$ grep -Ef 3Replies.txt A5Q5.txt | cut -f2 > text.txt
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131[00m$ awk '{gsub("and", ""); gsub("or", ""); gsub("if", ""); gsub("in", ""); gsub(" 
+it", ""); gsub("the", ""); gsub("of", ""); gsub("to", ""); gsub("a", "");
+> gsub("is", ""); gsub("I", ""); gsub("that", ""); gsub("this", ""); print}' text.txt > cleaned.txt
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131[00m$ ^C
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131[00m$ awk '{gsub("and", ""); gsub("or", ""); gsub("if", ""); gsub("in", ""); gsub(" 
+it", ""); gsub("the", ""); gsub("of", ""); gsub("to", ""); gsub("a", ""); gsub("is", ""); gsub("I", ""); gsub("that", ""); gsub("this", ""); print}' text.txt > cleaned.txt
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131[00m$ grep -oE '[[:alpha:]]+' cleaned.txt | sort | uniq -c | sort -nr > common.txt
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131[00m$ head common.txt
+    314 t
+    175 https
+    175 co
+    158 f
+    154 s
+    138 re
+    103 you
+    101 tht
+     73 hve
+     72 wh
+]0;kuroyukiryuu@KuroyukiRyuu: ~/School/CS_131[01;32mkuroyukiryuu@KuroyukiRyuu[00m:[01;34m~/School/CS_131[00m$ exit
+
+Script done on 2022-12-05 21:33:17-08:00 [COMMAND_EXIT_CODE="0"]
